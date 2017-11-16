@@ -19,7 +19,7 @@ function generateGrid() {
     }
     for (var i = 0; i < height; i++){
         grid.push(row);
-        // printableGrid += printableRow + '<br>';
+        printableGrid += printableRow + '\n';
     }
 
     $('.grid').text(printableGrid);
