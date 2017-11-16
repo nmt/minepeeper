@@ -11,21 +11,17 @@ var printableGrid = '';
  * Generates the N by M grid specified by width and height parameters.
  */
 function generateGrid() {
-	var row = [];
 	var printableRow = '';
 
 	for (var i = 0; i < width; i++){
-		row.push('☐');
-		// printableRow += '☐ ';
+		// row.push('☐');
 	}
-	for (var i = 0; i < height; i++){
-		grid.push(row);
-		// printableGrid += printableRow + '\n';
-	}
+	for (var j = 0; j < height; j++){
+		grid.push(['☐','☐','☐','☐','☐','☐','☐','☐']);
+    }
 
 	placeBombs();
-
-	printGrid();
+    printGrid();
 }
 
 /**
@@ -35,12 +31,10 @@ function placeBombs() {
 	var x, y;
 
 	for (var i = 0; i < bombCount; i++){
-		x = Math.floor(Math.random() * width);
-		y = Math.floor(Math.random() * height);
+		y = Math.floor(Math.random() * width);
+		x = Math.floor(Math.random() * height);
 
-		console.log(x + ' ' + y);
-
-		grid[x][y] = 'X';
+        grid[x][y] = 'X';
 	}
 }
 
@@ -49,7 +43,7 @@ function printGrid() {
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			if (!isBomb(grid[i][j])){
+			if (!isBomb(i,j)){
 				print += '☐ ';
 			}
 			else {
@@ -61,9 +55,8 @@ function printGrid() {
 	$('.grid').text(print);
 }
 
-// This part is not yet functional - how do I get functions to return a value?
 function isBomb(x, y) {
-	if (grid[x,y] === 'X'){
+	if (grid[x][y] === 'X'){
 		return true;
 	}
 	else
