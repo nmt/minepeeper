@@ -3,6 +3,7 @@ $(document).ready(generateGrid);
 var width = 8;
 var height = 10;
 var bombCount = 10;
+var bombList = [];
 
 var grid = [];
 var printableGrid = '';
@@ -17,7 +18,7 @@ function generateGrid() {
 		// row.push('☐');
 	}
 	for (var j = 0; j < height; j++){
-		grid.push(['☐','☐','☐','☐','☐','☐','☐','☐']);
+		grid.push([0,0,0,0,0,0,0,0]);
     }
 
 	placeBombs();
@@ -31,10 +32,30 @@ function placeBombs() {
 	var x, y;
 
 	for (var i = 0; i < bombCount; i++){
-		y = Math.floor(Math.random() * width);
 		x = Math.floor(Math.random() * height);
+		y = Math.floor(Math.random() * width);
 
-        grid[x][y] = 'X';
+		if (isBomb(x,y)){
+			continue;
+		}
+		else {
+			grid[x][y] = 'X';
+			generateHints(x,y);
+		}
+	}
+}
+
+function generateHints(x, y) {
+	for (var i = (x - 1); i < (x + 2); i++){
+		if ((i >= 0 && i <= width)){
+			for (var j = (y - 1); j < (y + 2); j++){
+				if (j >= 0 && j <= height){
+					if (!isBomb(i,j)){
+						grid[i][j] += 1;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -43,12 +64,7 @@ function printGrid() {
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			if (!isBomb(i,j)){
-				print += '☐ ';
-			}
-			else {
-				print += 'X ';
-			}
+			print += grid[i][j];
 		}
 		print += '\n';
 	}

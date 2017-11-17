@@ -1,1 +1,5 @@
-.grid { white-space: pre-line }
+.grid {
+	font-family: monospace;
+	font-size: 50px;
+	white-space: pre-line
+}
