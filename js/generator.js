@@ -3,21 +3,21 @@ $(document).ready(generateGrid);
 var width = 8;
 var height = 10;
 var bombCount = 10;
-var bombList = [];
 
+var row = [];
 var grid = [];
 
 /**
  * Generates the N by M grid specified by width and height parameters.
  */
 function generateGrid() {
-
-	for (var i = 0; i < width; i++){
-		// row.push('☐');
+	for (var i = 0; i < height; i++){
+		var row = [];
+		for (var j = 0; j < width; j++){
+			row.push(0);
+		}
+		grid.push(row);
 	}
-	for (var j = 0; j < height; j++){
-		grid.push([0,0,0,0,0,0,0,0]);
-    }
 
 	placeBombs();
     printGrid();
@@ -45,9 +45,9 @@ function placeBombs() {
 
 function generateHints(x, y) {
 	for (var i = (x - 1); i < (x + 2); i++){
-		if ((i >= 0 && i <= width)){
+		if (i >= 0 && i < width){
 			for (var j = (y - 1); j < (y + 2); j++){
-				if (j >= 0 && j <= height){
+				if (j >= 0 && j < height){
 					if (!isBomb(i,j)){
 						grid[i][j] += 1;
 					}
