@@ -6,13 +6,11 @@ var bombCount = 10;
 var bombList = [];
 
 var grid = [];
-var printableGrid = '';
 
 /**
  * Generates the N by M grid specified by width and height parameters.
  */
 function generateGrid() {
-	var printableRow = '';
 
 	for (var i = 0; i < width; i++){
 		// row.push('☐');
@@ -72,9 +70,17 @@ function printGrid() {
 }
 
 function isBomb(x, y) {
-	if (grid[x][y] === 'X'){
-		return true;
+	return (grid[x][y] === 'X');
+}
+
+function openCell(x, y) {
+	// Reveal just the one cell
+	if (grid[x][y] != 0){
+
 	}
-	else
-		return false;
+
+	// Open up that huge satisfying segment
+	else {
+
+	}
 }
