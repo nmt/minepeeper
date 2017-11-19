@@ -10,7 +10,6 @@ var grid = [];
 function main() {
 	generateGrid();
 	placeBombs();
-	console.log(bombList);
 	printGrid();
 	
 	$('.grid > span').click(function() {
@@ -19,6 +18,7 @@ function main() {
 		// console.log(this.id);
 		var params = currentId.split(' ');
 		// console.log(params);
+		$("#4 3").text('a');
 		openCell(params[0], params[1]);
 	});
 }
@@ -63,11 +63,12 @@ function placeBombs() {
  */
 function generateHints(x, y) {
 	for (var i = (x - 1); i < (x + 2); i++){			// Left to right of the bomb
-		if (i >= 0 && i < width){						// Don't go beyond the sides of the grid!
+		if (i >= 0 && i < height){						// Don't go beyond the sides of the grid!
 			for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
-				if (j >= 0 && j < height){
+				if (j >= 0 && j < width){
 					if (!isBomb(i,j)){
 						grid[i][j] += 1;
+						printGrid();
 					}
 				}
 			}
@@ -81,7 +82,7 @@ function printGrid() {
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			console.log(grid[i][j]);
+			// console.log(grid[i][j]);
 			style = determineColour(grid[i][j]);
 			print += '<span id=\"' + i + ' ' + j + '\" class \= \"' + style + '\"\>' + grid[i][j] + '</span>';
 		}
@@ -108,6 +109,13 @@ function isBomb(x, y) {
 }
 
 function openCell(x, y) {
+	var cellId = x + ' ' + y;
+	console.log(cellId);
+	// $("##{cellId}").toggle();
+
+	if (isBomb(x, y)){
+		// Game over
+	}
 }
 
 function changeCellState(x, y) {
