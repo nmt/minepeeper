@@ -13,13 +13,10 @@ function main() {
 	printGrid();
 	
 	$('.grid > span').click(function() {
-		// $(this).text('a');
 		var currentId = this.id;
-		// console.log(this.id);
 		var params = currentId.split(' ');
-		// console.log(params);
-		$("#4 3").text('a');
-		openCell(params[0], params[1]);
+		var cellValue = openCell(params[0], params[1])
+		$(this).html(cellValue);
 	});
 }
 
@@ -68,7 +65,6 @@ function generateHints(x, y) {
 				if (j >= 0 && j < width){
 					if (!isBomb(i,j)){
 						grid[i][j] += 1;
-						printGrid();
 					}
 				}
 			}
@@ -78,13 +74,12 @@ function generateHints(x, y) {
 
 function printGrid() {
 	var print = '';
-	var style = '';
+	// var style = '';
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			// console.log(grid[i][j]);
-			style = determineColour(grid[i][j]);
-			print += '<span id=\"' + i + ' ' + j + '\" class \= \"' + style + '\"\>' + grid[i][j] + '</span>';
+			// style = determineColour(grid[i][j]);
+			print += '<span id=\"' + i + ' ' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
 		}
 		print += '<br>';
 	}
@@ -109,9 +104,8 @@ function isBomb(x, y) {
 }
 
 function openCell(x, y) {
-	var cellId = x + ' ' + y;
-	console.log(cellId);
-	// $("##{cellId}").toggle();
+	// var cellId = x + ' ' + y;
+	return grid[x][y];
 
 	if (isBomb(x, y)){
 		// Game over
