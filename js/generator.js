@@ -14,8 +14,12 @@ function main() {
 	printGrid();
 	
 	$('.grid > span').click(function() {
-		$(this).text('a');
-		console.log(this.id);
+		// $(this).text('a');
+		var currentId = this.id;
+		// console.log(this.id);
+		var params = currentId.split(' ');
+		// console.log(params);
+		openCell(params[0], params[1]);
 	});
 }
 
@@ -73,14 +77,30 @@ function generateHints(x, y) {
 
 function printGrid() {
 	var print = '';
+	var style = '';
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			print += '<span id="' + i + ' ' + j + '">' + grid[i][j] + '</span>';
+			console.log(grid[i][j]);
+			style = determineColour(grid[i][j]);
+			print += '<span id=\"' + i + ' ' + j + '\" class \= \"' + style + '\"\>' + grid[i][j] + '</span>';
 		}
 		print += '<br>';
 	}
 	$('.grid').html(print);
+}
+
+function determineColour(cell) {
+		switch (cell) {
+			case 1:
+				return 'hintOne';
+			case 2:
+				return 'hintTwo';
+			case 3:
+				return 'hintThree';
+			default:
+				return '';
+		}
 }
 
 function isBomb(x, y) {
@@ -88,15 +108,6 @@ function isBomb(x, y) {
 }
 
 function openCell(x, y) {
-	// Reveal just the one cell
-	if (grid[x][y] != 0){
-
-	}
-
-	// Open up that huge satisfying segment
-	else {
-
-	}
 }
 
 function changeCellState(x, y) {
