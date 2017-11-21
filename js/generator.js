@@ -1,4 +1,6 @@
 $(document).ready(main);
+$(document).ready(myFunction);
+var init = false;
 
 var width = 8;
 var height = 10;
@@ -8,15 +10,26 @@ var bombList = new Set();
 var grid = [];
 
 function main() {
-	generateGrid();
-	placeBombs();
-	printGrid();
-	
+	if (!init){
+		generateGrid();
+		placeBombs();
+		printGrid();
+
+		init = true;
+	}
+}
+
+function myFunction() {	
 	$('.grid > span').click(function() {
+		// maybe just get the data attribute of the cell
+		console.log('pong');
 		var currentId = this.id;
-		var params = currentId.split(' ');
+		var params = currentId.split('-');
 		var cellValue = openCell(params[0], params[1])
-		$(this).html(cellValue);
+
+		for(var i = 0; i < cellValue.length; i++){
+			$(cellValue[i]).html(cellValue);
+		}
 	});
 }
 
@@ -79,7 +92,7 @@ function printGrid() {
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
 			// style = determineColour(grid[i][j]);
-			print += '<span id=\"' + i + ' ' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
+			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
 		}
 		print += '<br>';
 	}
@@ -103,12 +116,34 @@ function isBomb(x, y) {
 	return (grid[x][y] === 'X');
 }
 
-function openCell(x, y) {
-	// var cellId = x + ' ' + y;
-	return grid[x][y];
+var zeroSegmentList = new Set();
 
-	if (isBomb(x, y)){
-		// Game over
+function openCell(x, y) {
+	switch (grid[x][y]){
+		case 1:
+			return grid[x][y];
+			break;
+		case 0:
+			zeroSegmentList.clear();
+			for (var i = (x - 1); i < (x + 2); i++){			// Left to right of the bomb
+				if (i >= 0 && i < height){						// Don't go beyond the sides of the grid!
+					for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
+						if (j >= 0 && j < width){
+							if (grid[i][j] === 0){
+								zeroSegmentList.add(i + ' ' + j);
+							}
+						}
+					}
+				}
+			}
+			console.log(zeroSegmentList);
+			return zeroSegmentList;
+			break;
+		case 'X':
+			// Game over
+			break;
+		default:
+			return grid[x][y];
 	}
 }
 
