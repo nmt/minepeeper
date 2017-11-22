@@ -19,16 +19,18 @@ function main() {
 	}
 }
 
-function myFunction() {	
+function myFunction() {
 	$('.grid > span').click(function() {
 		// maybe just get the data attribute of the cell
 		console.log('pong');
 		var currentId = this.id;
 		var params = currentId.split('-');
-		var cellValue = openCell(params[0], params[1])
+		var cellValue = [];
+		cellValue.push(openCell(params[0], params[1]));
 
 		for(var i = 0; i < cellValue.length; i++){
-			$(cellValue[i]).html(cellValue);
+			console.log(cellValue[i]);
+			$(cellValue[i]).html('B');
 		}
 	});
 }
@@ -92,7 +94,7 @@ function printGrid() {
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
 			// style = determineColour(grid[i][j]);
-			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
+			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</span>';
 		}
 		print += '<br>';
 	}
@@ -121,7 +123,7 @@ var zeroSegmentList = new Set();
 function openCell(x, y) {
 	switch (grid[x][y]){
 		case 1:
-			return grid[x][y];
+			return ('#' + x + '-' + y);
 			break;
 		case 0:
 			zeroSegmentList.clear();
@@ -130,7 +132,7 @@ function openCell(x, y) {
 					for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
 						if (j >= 0 && j < width){
 							if (grid[i][j] === 0){
-								zeroSegmentList.add(i + ' ' + j);
+								zeroSegmentList.add('#' + i + '-' + j);
 							}
 						}
 					}
