@@ -19,17 +19,18 @@ function main() {
 	}
 }
 
+var cellValue = [];
+
 function myFunction() {
 	$('.grid > span').click(function() {
 		// maybe just get the data attribute of the cell
-		console.log('pong');
 		var currentId = this.id;
 		var params = currentId.split('-');
-		var cellValue = [];
-		cellValue.push(openCell(params[0], params[1]));
+		openCell(params[0], params[1]);
+		console.log('open cell');
 
 		for(var i = 0; i < cellValue.length; i++){
-			console.log(cellValue[i]);
+			// console.log(cellValue[i]);
 			$(cellValue[i]).html('B');
 		}
 	});
@@ -121,31 +122,34 @@ function isBomb(x, y) {
 var zeroSegmentList = new Set();
 
 function openCell(x, y) {
+	zeroSegmentList.clear();
+
+	x = parseInt(x);
+	y = parseInt(y);
+
 	switch (grid[x][y]){
-		case 1:
-			return ('#' + x + '-' + y);
-			break;
 		case 0:
-			zeroSegmentList.clear();
 			for (var i = (x - 1); i < (x + 2); i++){			// Left to right of the bomb
 				if (i >= 0 && i < height){						// Don't go beyond the sides of the grid!
 					for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
 						if (j >= 0 && j < width){
 							if (grid[i][j] === 0){
+								console.log(i + ' ' + j);
 								zeroSegmentList.add('#' + i + '-' + j);
+								cellValue.push('#' + i + '-' + j);
 							}
 						}
 					}
 				}
 			}
-			console.log(zeroSegmentList);
+			// console.log(zeroSegmentList);
 			return zeroSegmentList;
-			break;
 		case 'X':
 			// Game over
 			break;
 		default:
-			return grid[x][y];
+			cellValue.push('#' + x + '-' + y);
+			break;
 	}
 }
 
