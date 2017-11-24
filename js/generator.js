@@ -127,22 +127,31 @@ function openCell(x, y) {
 	x = parseInt(x);
 	y = parseInt(y);
 
+	zeroSegmentList.add('#' + x + '-' + y);
+
+	var numbers = [];
+
 	switch (grid[x][y]){
 		case 0:
-			for (var i = (x - 1); i < (x + 2); i++){			// Left to right of the bomb
-				if (i >= 0 && i < height){						// Don't go beyond the sides of the grid!
-					for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
-						if (j >= 0 && j < width){
-							if (grid[i][j] === 0){
-								console.log(i + ' ' + j);
-								zeroSegmentList.add('#' + i + '-' + j);
-								cellValue.push('#' + i + '-' + j);
+			zeroSegmentList.forEach((element) => {
+				numbers = element.split('');
+
+				x = parseInt(numbers[1]);
+				y = parseInt(numbers[3]);
+
+				for (var i = (x - 1); i < (x + 2); i++){
+					if (i >= 0 && i < height){
+						for (var j = (y - 1); j < (y + 2); j++){
+							if (j >= 0 && j < width){
+								if (grid[i][j] === 0){
+									zeroSegmentList.add('#' + i + '-' + j);
+									cellValue.push('#' + i + '-' + j);
+								}
 							}
 						}
 					}
 				}
-			}
-			// console.log(zeroSegmentList);
+			});
 			return zeroSegmentList;
 		case 'X':
 			// Game over
