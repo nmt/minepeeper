@@ -130,6 +130,7 @@ function openCell(x, y) {
 	zeroSegmentList.add('#' + x + '-' + y);
 
 	var numbers = [];
+	var up, down, left, right;
 
 	switch (grid[x][y]){
 		case 0:
@@ -143,10 +144,14 @@ function openCell(x, y) {
 					if (i >= 0 && i < height){
 						for (var j = (y - 1); j < (y + 2); j++){
 							if (j >= 0 && j < width){
-								if (grid[i][j] === 0){
-									zeroSegmentList.add('#' + i + '-' + j);
-									cellValue.push('#' + i + '-' + j);
-								}
+								up = (i === (x-1)) && (j === y);
+								down = (i === (x+1)) && (j === y);
+								left = (i === x) && (j === (y-1));
+								right = (i === x) && (j === (y+1));
+									if (grid[i][j] === 0 && (up || down || left || right)){
+										zeroSegmentList.add('#' + i + '-' + j);
+										cellValue.push('#' + i + '-' + j);
+									}
 							}
 						}
 					}
