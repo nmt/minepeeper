@@ -27,12 +27,13 @@ function myFunction() {
 		var currentId = this.id;
 		var params = currentId.split('-');
 		openCell(params[0], params[1]);
-		console.log('open cell');
+		var x = parseInt(params[0]);
+		var y = parseInt(params[1]);
 
 		for(var i = 0; i < cellValue.length; i++){
-			// console.log(cellValue[i]);
-			$(cellValue[i]).html('B');
+			$(cellValue[i]).html(grid[x][y]);
 		}
+		cellValue = [];
 	});
 }
 
@@ -95,7 +96,7 @@ function printGrid() {
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
 			// style = determineColour(grid[i][j]);
-			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</span>';
+			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
 		}
 		print += '<br>';
 	}
