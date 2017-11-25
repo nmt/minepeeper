@@ -1,5 +1,4 @@
 $(document).ready(main);
-$(document).ready(myFunction);
 var init = false;
 
 var width = 8;
@@ -9,33 +8,35 @@ var bombList = new Set();
 
 var grid = [];
 
+var gameOver = false;
+
 function main() {
+	// Initialise the board once
 	if (!init){
 		generateGrid();
 		placeBombs();
 		printGrid();
-
 		init = true;
 	}
+
+	$('.grid > span').click(function() {
+		if (!gameOver){ 
+			// maybe just get the data attribute of the cell
+			var currentId = this.id;
+			var params = currentId.split('-');
+			openCell(params[0], params[1]);
+			var x = parseInt(params[0]);
+			var y = parseInt(params[1]);
+
+			for(var i = 0; i < cellValue.length; i++){
+				$(cellValue[i]).html(grid[x][y]);
+			}
+			cellValue = [];
+		}
+	});
 }
 
 var cellValue = [];
-
-function myFunction() {
-	$('.grid > span').click(function() {
-		// maybe just get the data attribute of the cell
-		var currentId = this.id;
-		var params = currentId.split('-');
-		openCell(params[0], params[1]);
-		var x = parseInt(params[0]);
-		var y = parseInt(params[1]);
-
-		for(var i = 0; i < cellValue.length; i++){
-			$(cellValue[i]).html(grid[x][y]);
-		}
-		cellValue = [];
-	});
-}
 
 /**
  * Generates the N by M grid specified by width and height parameters.
@@ -160,7 +161,8 @@ function openCell(x, y) {
 			});
 			return zeroSegmentList;
 		case 'X':
-			// Game over
+			cellValue.push('#' + x + '-' + y);
+			gameOver = true;
 			break;
 		default:
 			cellValue.push('#' + x + '-' + y);
