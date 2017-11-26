@@ -31,6 +31,9 @@ function main() {
 			var y = parseInt(params[1]);
 
 			cellValue.forEach(element => {
+				params = element.split('');
+				x = parseInt(params[1]);
+				y = parseInt(params[3]);
 				$(element).html(grid[x][y]);
 			});
 			cellValue.clear();
@@ -87,7 +90,12 @@ function generateHints(x, y, reveal) {
 						}
 					}
 					else if (reveal) {
-						cellValue.add('#' + i + '-' + j);
+						// if (grid[i][j] === 0){
+						// 	// openCell(i,j);
+						// }
+						// else {
+							cellValue.add('#' + i + '-' + j);
+						// }
 					}
 				}
 			}
