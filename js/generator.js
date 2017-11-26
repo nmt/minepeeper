@@ -10,6 +10,8 @@ var grid = [];
 
 var gameOver = false;
 
+var cellValue = new Set();
+
 function main() {
 	// Initialise the board once
 	if (!init){
@@ -28,15 +30,13 @@ function main() {
 			var x = parseInt(params[0]);
 			var y = parseInt(params[1]);
 
-			for(var i = 0; i < cellValue.length; i++){
-				$(cellValue[i]).html(grid[x][y]);
-			}
-			cellValue = [];
+			cellValue.forEach(element => {
+				$(element).html(grid[x][y]);
+			});
+			cellValue.clear();
 		}
 	});
 }
-
-var cellValue = [];
 
 /**
  * Generates the N by M grid specified by width and height parameters.
@@ -65,7 +65,7 @@ function placeBombs() {
 		if (!isBomb(x,y)){
 			bombList.add(x + ' ' + y);
 			grid[x][y] = 'X';
-			generateHints(x,y);
+			generateHints(x,y,false);
 		}
 		else {
 			i--;
@@ -76,13 +76,18 @@ function placeBombs() {
 /**
  * Adds hint numbers for each cell surround a bomb
  */
-function generateHints(x, y) {
+function generateHints(x, y, reveal) {
 	for (var i = (x - 1); i < (x + 2); i++){			// Left to right of the bomb
 		if (i >= 0 && i < height){						// Don't go beyond the sides of the grid!
 			for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
 				if (j >= 0 && j < width){
-					if (!isBomb(i,j)){
-						grid[i][j] += 1;
+					if (!reveal){
+						if (!isBomb(i,j)){
+							grid[i][j] += 1;
+						}
+					}
+					else if (reveal) {
+						cellValue.add('#' + i + '-' + j);
 					}
 				}
 			}
@@ -136,6 +141,7 @@ function openCell(x, y) {
 
 	switch (grid[x][y]){
 		case 0:
+			// Find all the connected zero values
 			zeroSegmentList.forEach((element) => {
 				numbers = element.split('');
 
@@ -152,20 +158,34 @@ function openCell(x, y) {
 								right = (i === x) && (j === (y+1));
 									if (grid[i][j] === 0 && (up || down || left || right)){
 										zeroSegmentList.add('#' + i + '-' + j);
-										cellValue.push('#' + i + '-' + j);
+										cellValue.add('#' + i + '-' + j);
 									}
 							}
 						}
 					}
 				}
 			});
-			return zeroSegmentList;
+
+			// Sort the zero coordinates and open the numerical cells around them
+			myArray = Array.from(zeroSegmentList).sort();
+
+			for (var i = 0; i < myArray.length; i++){
+				numbers = myArray[i].split('');
+
+				x = parseInt(numbers[1]);
+				y = parseInt(numbers[3]);
+
+				generateHints(x,y,true);
+			}
+			break;
+
 		case 'X':
-			cellValue.push('#' + x + '-' + y);
+			cellValue.add('#' + x + '-' + y);
 			gameOver = true;
 			break;
+
 		default:
-			cellValue.push('#' + x + '-' + y);
+			cellValue.add('#' + x + '-' + y);
 			break;
 	}
 }
