@@ -4,14 +4,12 @@
 	white-space: pre-line
 }
 
-.hintOne {
-	color: navy;
-}
-
-.hintTwo {
-	color: green;
-}
-
-.hintThree {
-	color: red;
-}
+.hintZero {	color: transparent;	}
+.hintOne {	color: blue;	}
+.hintTwo {	color: green;	}
+.hintThree {color: red;		}
+.hintFour {	color: navy;		}
+.hintFive {	color: maroon;		}
+.hintSix {	color: teal;		}
+.hintSeven {color: purple;		}
+.hintEight {color: black;		}

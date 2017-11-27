@@ -34,7 +34,7 @@ function main() {
 				params = element.split('');
 				x = parseInt(params[1]);
 				y = parseInt(params[3]);
-				
+
 				$(element).html(grid[x][y]);
 				$(element).attr({'class':determineColour(grid[x][y])});
 			});
@@ -119,14 +119,16 @@ function printGrid() {
 
 function determineColour(cell) {
 		switch (cell) {
-			case 1:
-				return 'hintOne';
-			case 2:
-				return 'hintTwo';
-			case 3:
-				return 'hintThree';
-			default:
-				return '';
+			case 0: return 'hintZero';
+			case 1: return 'hintOne';
+			case 2: return 'hintTwo';
+			case 3: return 'hintThree';
+			case 4: return 'hintFour';
+			case 5: return 'hintFive';
+			case 6: return 'hintSix';
+			case 7: return 'hintSeven';
+			case 8: return 'hintEight';
+			default: return '';
 		}
 }
 
