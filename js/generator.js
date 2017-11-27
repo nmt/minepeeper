@@ -34,7 +34,9 @@ function main() {
 				params = element.split('');
 				x = parseInt(params[1]);
 				y = parseInt(params[3]);
+				
 				$(element).html(grid[x][y]);
+				$(element).attr({'class':determineColour(grid[x][y])});
 			});
 			cellValue.clear();
 		}
@@ -105,11 +107,9 @@ function generateHints(x, y, reveal) {
 
 function printGrid() {
 	var print = '';
-	// var style = '';
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			// style = determineColour(grid[i][j]);
 			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
 		}
 		print += '<br>';
