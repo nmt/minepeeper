@@ -12,6 +12,17 @@ var gameOver = false;
 
 var cellValue = new Set();
 
+$('.mr-face').text('\:\)');
+
+function reset() {
+	init = false;
+	bombList.clear;
+	grid = [];
+	gameOver = false;
+	cellValue.clear;
+	main();
+}
+
 function main() {
 	// Initialise the board once
 	if (!init){
@@ -39,6 +50,27 @@ function main() {
 				$(element).attr({'class':determineColour(grid[x][y])});
 			});
 			cellValue.clear();
+
+			$('.grid').on('mousedown', function() {
+				$('.mr-face').text('\:O');
+			});
+			$('.grid').on('mouseup', function() {
+				if (grid[x][y] !== 'X'){
+					$('.mr-face').text('\:\)');
+				}
+				else {
+					gameOver = true;
+					$('.mr-face').text('X\(');
+				}
+			});
+		}
+		else if (gameOver) {
+			$('.grid').on('mousedown', function() {
+				$('.mr-face').text('X\(');
+			});
+			$('.grid').on('mouseup', function() {
+				$('.mr-face').text('X\(');
+			});
 		}
 	});
 }
@@ -117,6 +149,10 @@ function printGrid() {
 	$('.grid').html(print);
 }
 
+/**
+ * @param {*} cell	Cell of interest
+ * @returns			Class name to colour a cell
+ */
 function determineColour(cell) {
 		switch (cell) {
 			case 0: return 'hintZero';
