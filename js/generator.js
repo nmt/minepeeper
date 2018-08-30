@@ -51,6 +51,10 @@ function main() {
 			});
 			cellValue.clear();
 
+			$('.grid').on('contextmenu', function() {
+				console.log(x + ' ' + y);
+				flag(x, y);
+			});
 			$('.grid').on('mousedown', function() {
 				$('.mr-face').text('\:O');
 			});
@@ -147,6 +151,10 @@ function printGrid() {
 		print += '<br>';
 	}
 	$('.grid').html(print);
+}
+
+function flag(x, y) {
+	document.getElementById(x + "-" + y).innerHTML = '>';
 }
 
 /**
