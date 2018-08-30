@@ -1,4 +1,6 @@
 $(document).ready(main);
+
+let debug = true;
 var init = false;
 
 var width = 8;
@@ -146,7 +148,12 @@ function printGrid() {
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
+			if (debug === false) {
+				print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
+			}
+			else {
+				print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</span>';
+			}
 		}
 		print += '<br>';
 	}
