@@ -108,7 +108,7 @@ function placeBombs() {
 		if (!isBomb(x,y)){
 			bombList.add(x + ' ' + y);
 			grid[x][y] = 'X';
-			generateHints(x,y,false);
+			generateHints(x,y);
 		}
 		else {
 			i--;
@@ -119,23 +119,13 @@ function placeBombs() {
 /**
  * Adds hint numbers for each cell surround a bomb
  */
-function generateHints(x, y, reveal) {
+function generateHints(x, y) {
 	for (var i = (x - 1); i < (x + 2); i++){			// Left to right of the bomb
 		if (i >= 0 && i < height){						// Don't go beyond the sides of the grid!
 			for (var j = (y - 1); j < (y + 2); j++){	// Top to bottom of bomb
 				if (j >= 0 && j < width){
-					if (!reveal){
-						if (!isBomb(i,j)){
-							grid[i][j] += 1;
-						}
-					}
-					else if (reveal) {
-						// if (grid[i][j] === 0){
-						// 	// openCell(i,j);
-						// }
-						// else {
-							cellValue.add('#' + i + '-' + j);
-						// }
+					if (!isBomb(i,j)){
+						grid[i][j] += 1;
 					}
 				}
 			}
@@ -236,7 +226,7 @@ function openCell(x, y) {
 				x = parseInt(numbers[1]);
 				y = parseInt(numbers[3]);
 
-				generateHints(x,y,true);
+				cellValue.add('#' + x + '-' + y);
 			}
 			break;
 
