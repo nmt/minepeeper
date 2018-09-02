@@ -22,17 +22,22 @@ function reset() {
 	grid = [];
 	gameOver = false;
 	cellValue.clear;
-	main();
+	initialise();
+}
+
+function initialise() {
+	generateGrid();
+	console.log("gen grid: ");
+	placeBombs();
+	printGrid();
+	gameOver = false;
+	init = true;
 }
 
 function main() {
 	// Initialise the board once
 	if (!init){
-		generateGrid();
-		placeBombs();
-		printGrid();
-		gameOver = false;
-		init = true;
+		initialise();
 	}
 
 	$('.reset-button').click(function() {
@@ -40,50 +45,52 @@ function main() {
 	});
 
 	$('.grid > .cell').click(function() {
-		console.log({gameOver});
-		if (!gameOver){ 
-			// maybe just get the data attribute of the cell
-			var currentId = this.id;
-			var params = currentId.split('-');
-			openCell(params[0], params[1]);
-			var x = parseInt(params[0]);
-			var y = parseInt(params[1]);
-
-			cellValue.forEach(element => {
-				params = element.split('');
-				x = parseInt(params[1]);
-				y = parseInt(params[3]);
-
-				$(element).html(grid[x][y]);
-				$(element).attr({'class':determineColour(grid[x][y])});
-			});
-			cellValue.clear();
-
-			$('.grid').on('contextmenu', function() {
-				console.log(x + ' ' + y);
-				flag(x, y);
-			});
-			$('.grid').on('mousedown', function() {
-				$('.mr-face').text('\:O');
-			});
-			$('.grid').on('mouseup', function() {
-				if (grid[x][y] !== 'X'){
-					$('.mr-face').text('\:\)');
-				}
-				else {
-					$('.mr-face').text('X\(');
-				}
-			});
-		}
-		else if (gameOver) {
-			$('.grid').on('mousedown', function() {
-				$('.mr-face').text('X\(');
-			});
-			$('.grid').on('mouseup', function() {
-				$('.mr-face').text('X\(');
-			});
-		}
+		openCell(this.id);
 	});
+}
+
+function openCell(currentId) {
+	if (!gameOver){ 
+		// maybe just get the data attribute of the cell
+		var params = currentId.split('-');
+		displayCell(params[0], params[1]);
+		var x = parseInt(params[0]);
+		var y = parseInt(params[1]);
+
+		cellValue.forEach(element => {
+			params = element.split('');
+			x = parseInt(params[1]);
+			y = parseInt(params[3]);
+
+			$(element).html(grid[x][y]);
+			$(element).attr({'class':determineColour(grid[x][y])});
+		});
+		cellValue.clear();
+
+		$('.grid').on('contextmenu', function() {
+			console.log(x + ' ' + y);
+			flag(x, y);
+		});
+		$('.grid').on('mousedown', function() {
+			$('.mr-face').text('\:O');
+		});
+		$('.grid').on('mouseup', function() {
+			if (grid[x][y] !== 'X'){
+				$('.mr-face').text('\:\)');
+			}
+			else {
+				$('.mr-face').text('X\(');
+			}
+		});
+	}
+	else if (gameOver) {
+		$('.grid').on('mousedown', function() {
+			$('.mr-face').text('X\(');
+		});
+		$('.grid').on('mouseup', function() {
+			$('.mr-face').text('X\(');
+		});
+	}
 }
 
 /**
@@ -185,7 +192,7 @@ function isBomb(x, y) {
 
 var zeroSegmentList = new Set();
 
-function openCell(x, y) {
+function displayCell(x, y) {
 	zeroSegmentList.clear();
 
 	x = parseInt(x);
