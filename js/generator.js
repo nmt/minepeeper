@@ -31,10 +31,16 @@ function main() {
 		generateGrid();
 		placeBombs();
 		printGrid();
+		gameOver = false;
 		init = true;
 	}
 
-	$('.grid > span').click(function() {
+	$('.reset-button').click(function() {
+		reset();
+	});
+
+	$('.grid > .cell').click(function() {
+		console.log({gameOver});
 		if (!gameOver){ 
 			// maybe just get the data attribute of the cell
 			var currentId = this.id;
@@ -65,7 +71,6 @@ function main() {
 					$('.mr-face').text('\:\)');
 				}
 				else {
-					gameOver = true;
 					$('.mr-face').text('X\(');
 				}
 			});
@@ -139,10 +144,10 @@ function printGrid() {
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
 			if (debug === false) {
-				print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</span>';
+				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</div>';
 			}
 			else {
-				print += '<span id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</span>';
+				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</div>';
 			}
 		}
 		print += '<br>';
@@ -159,21 +164,22 @@ function flag(x, y) {
  * @returns			Class name to colour a cell
  */
 function determineColour(cell) {
-		switch (cell) {
-			case 0: return 'hintZero';
-			case 1: return 'hintOne';
-			case 2: return 'hintTwo';
-			case 3: return 'hintThree';
-			case 4: return 'hintFour';
-			case 5: return 'hintFive';
-			case 6: return 'hintSix';
-			case 7: return 'hintSeven';
-			case 8: return 'hintEight';
-			default: return '';
-		}
+	switch (cell) {
+		case 0: return 'cell hintZero';
+		case 1: return 'cell hintOne';
+		case 2: return 'cell hintTwo';
+		case 3: return 'cell hintThree';
+		case 4: return 'cell hintFour';
+		case 5: return 'cell hintFive';
+		case 6: return 'cell hintSix';
+		case 7: return 'cell hintSeven';
+		case 8: return 'cell hintEight';
+		default: return 'cell';
+	}
 }
 
 function isBomb(x, y) {
+	gameOver = true;
 	return (grid[x][y] === 'X');
 }
 

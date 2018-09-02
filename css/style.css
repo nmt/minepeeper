@@ -4,6 +4,12 @@
 	white-space: pre-line
 }
 
+.cell {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+}
+
 .hintZero	{	color: transparent;	}
 .hintOne	{	color: blue;	}
 .hintTwo	{	color: green;	}
