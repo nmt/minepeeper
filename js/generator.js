@@ -16,24 +16,6 @@ var cellValue = new Set();
 
 $('.mr-face').text('\:\)');
 
-function reset() {
-	init = false;
-	bombList.clear;
-	grid = [];
-	gameOver = false;
-	cellValue.clear;
-	initialise();
-}
-
-function initialise() {
-	generateGrid();
-	console.log("gen grid: ");
-	placeBombs();
-	printGrid();
-	gameOver = false;
-	init = true;
-}
-
 function main() {
 	// Initialise the board once
 	if (!init){
@@ -47,6 +29,30 @@ function main() {
 	$('.grid > .cell').click(function() {
 		openCell(this.id);
 	});
+}
+
+function initialise() {
+	generateGrid();
+	placeBombs();
+	printGrid();
+	gameOver = false;
+	init = true;
+}
+
+function reset() {
+	gameOver = false;
+	bombList = new Set();
+	cellValue = new Set();
+	resetGrid();
+	// placeBombs();
+}
+
+function resetGrid() {
+	let cells = $('.cell');
+	for (var i = 0; i < cells.length; i++) {
+		$(cells[i]).text('0');
+		$(cells[i]).data('value', 0);
+	}
 }
 
 function openCell(currentId) {
@@ -151,10 +157,10 @@ function printGrid() {
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
 			if (debug === false) {
-				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + '\\' + '</div>';
+				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-value=\"' + grid[i][j] + '\"\>' + '\\' + '</div>';
 			}
 			else {
-				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-attribute=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</div>';
+				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-value=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</div>';
 			}
 		}
 		print += '<br>';
@@ -190,10 +196,8 @@ function isBomb(x, y) {
 	return (grid[x][y] === 'X');
 }
 
-var zeroSegmentList = new Set();
-
 function displayCell(x, y) {
-	zeroSegmentList.clear();
+	var zeroSegmentList = new Set();
 
 	x = parseInt(x);
 	y = parseInt(y);
