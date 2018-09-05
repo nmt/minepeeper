@@ -43,8 +43,11 @@ function reset() {
 	gameOver = false;
 	bombList = new Set();
 	cellValue = new Set();
+	grid = [];
+	generateGrid();
 	resetGrid();
-	// placeBombs();
+	placeBombs();
+	console.log(grid);
 }
 
 function resetGrid() {
