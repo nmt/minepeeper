@@ -47,14 +47,28 @@ function reset() {
 	generateGrid();
 	resetGrid();
 	placeBombs();
-	console.log(grid);
+	reprintGrid();
 }
 
 function resetGrid() {
 	let cells = $('.cell');
 	for (var i = 0; i < cells.length; i++) {
+		$(cells[i]).attr('class', 'cell');
 		$(cells[i]).text('0');
-		$(cells[i]).data('value', 0);
+		$(cells[i]).attr('data-value', 0);
+	}
+}
+
+function reprintGrid() {
+	let cells = $('.cell');
+	let boop = 0;
+
+	for (var i = 0; i < height; i++){
+		for (var j = 0; j < width; j++){
+			$(cells[boop]).text(grid[i][j]);
+			$(cells[boop]).attr('data-value', grid[i][j]);
+			boop++;
+		}
 	}
 }
 
