@@ -209,7 +209,7 @@ function determineColour(cell) {
 }
 
 function isBomb(x, y) {
-	gameOver = true;
+	// gameOver = true;
 	return (grid[x][y] === 'X');
 }
 
