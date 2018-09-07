@@ -1,6 +1,6 @@
 $(document).ready(main);
 
-let debug = true;
+let debug = false;
 var init = false;
 
 var width = 8;
@@ -65,7 +65,12 @@ function reprintGrid() {
 
 	for (var i = 0; i < height; i++){
 		for (var j = 0; j < width; j++){
-			$(cells[boop]).text(grid[i][j]);
+			if (debug == true) {
+				$(cells[boop]).text(grid[i][j]);
+			}
+			else {
+				$(cells[boop]).text('\\');
+			}
 			$(cells[boop]).attr('data-value', grid[i][j]);
 			boop++;
 		}
