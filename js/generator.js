@@ -220,6 +220,7 @@ function isBomb(x, y) {
 
 function displayCell(x, y) {
 	var zeroSegmentList = new Set();
+	var nonZeroSegmentList = new Set();
 
 	x = parseInt(x);
 	y = parseInt(y);
@@ -227,7 +228,7 @@ function displayCell(x, y) {
 	zeroSegmentList.add('#' + x + '-' + y);
 
 	var numbers = [];
-	var up, down, left, right;
+	var up, down, left, right, nw, ne, sw, se;
 
 	switch (grid[x][y]){
 		case 0:
@@ -242,14 +243,15 @@ function displayCell(x, y) {
 					if (i >= 0 && i < height){
 						for (var j = (y - 1); j < (y + 2); j++){
 							if (j >= 0 && j < width){
+								// U D L R are true if there are more 0 cells to be added to the lit
 								up = (i === (x-1)) && (j === y);
 								down = (i === (x+1)) && (j === y);
 								left = (i === x) && (j === (y-1));
 								right = (i === x) && (j === (y+1));
-									if (grid[i][j] === 0 && (up || down || left || right)){
-										zeroSegmentList.add('#' + i + '-' + j);
-										cellValue.add('#' + i + '-' + j);
-									}
+								if (grid[i][j] === 0 && (up || down || left || right)){
+									zeroSegmentList.add('#' + i + '-' + j);
+									cellValue.add('#' + i + '-' + j);
+								}
 							}
 						}
 					}
@@ -258,8 +260,37 @@ function displayCell(x, y) {
 
 			// Sort the zero coordinates and open the numerical cells around them
 			myArray = Array.from(zeroSegmentList).sort();
+			
+			// Find all the connected zero values
+			myArray.forEach((element) => {
+				numbers = element.split('');
 
-			for (var i = 0; i < myArray.length; i++){
+				x = parseInt(numbers[1]);
+				y = parseInt(numbers[3]);
+
+				for (var i = (x - 1); i < (x + 2); i++){
+					if (i >= 0 && i < height){
+						for (var j = (y - 1); j < (y + 2); j++){
+							if (j >= 0 && j < width){
+								up = (i === (x-1)) && (j === y);
+								down = (i === (x+1)) && (j === y);
+								left = (i === x) && (j === (y-1));
+								right = (i === x) && (j === (y+1));
+								nw = (i === (x-1)) && (j === (y-1));
+								ne = (i === (x-1)) && (j === (y+1));
+								sw = (i === (x+1)) && (j === (y-1));
+								se = (i === (x+1)) && (j === (y+1));
+								if (grid[i][j] != 0){
+									nonZeroSegmentList.add('#' + i + '-' + j);
+									cellValue.add('#' + i + '-' + j);
+								}
+							}
+						}
+					}
+				}
+			});
+
+			for (var i = 0; i < myArray.length; i++) {
 				numbers = myArray[i].split('');
 
 				x = parseInt(numbers[1]);
