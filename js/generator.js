@@ -1,27 +1,26 @@
 $(document).ready(main);
 
-let debug = true;
-var init = false;
-
-var width = 8;
-var height = 10;
-var bombCount = 10;
-var bombList = new Set();
-
-var grid = [];
-
+var debug = true;
 var gameOver = false;
 
+var width = 8,
+	height = 10,
+	bombCount = 10,
+	bombList = new Set();
+
+var grid = [];
 var cellValue = new Set();
 
 $('.mr-face').text('\:\)');
 
 function main() {
-	// Initialise the board once
-	if (!init) {
-		initialise();
-	}
+	generateGrid();
+	placeBombs();
+	printGrid();
+	eventListeners();
+}
 
+function eventListeners() {
 	$('.reset-button').click(function() {
 		reset();
 	});
@@ -29,14 +28,6 @@ function main() {
 	$('.grid > .cell').click(function() {
 		openCell(this.id);
 	});
-}
-
-function initialise() {
-	generateGrid();
-	placeBombs();
-	printGrid();
-	gameOver = false;
-	init = true;
 }
 
 function reset() {
@@ -51,7 +42,7 @@ function reset() {
 }
 
 function resetGrid() {
-	let cells = $('.cell');
+	var cells = $('.cell');
 	for (var i = 0; i < cells.length; i++) {
 		$(cells[i]).attr('class', 'cell');
 		$(cells[i]).text('0');
@@ -60,8 +51,8 @@ function resetGrid() {
 }
 
 function reprintGrid() {
-	let cells = $('.cell');
-	let boop = 0;
+	var cells = $('.cell');
+	var boop = 0;
 
 	for (var i = 0; i < height; i++) {
 		for (var j = 0; j < width; j++) {
@@ -95,7 +86,7 @@ function openCell(currentId) {
 		});
 		cellValue.clear();
 
-		$('.grid').on('contextmenu', function() {
+		$('.cell').on('contextmenu', function() {
 			console.log(x + ' ' + y);
 			flag(x, y);
 		});
