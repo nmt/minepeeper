@@ -25,8 +25,13 @@ function eventListeners() {
 		reset();
 	});
 
-	$('.grid > .cell').click(function() {
+	$('.cell').click(function() {
 		openCell(this.id);
+	});
+
+	$('.cell').on('contextmenu', function() {
+		console.log(this.id);
+		flag(this.id);
 	});
 }
 
@@ -65,50 +70,6 @@ function reprintGrid() {
 			$(cells[boop]).attr('data-value', grid[i][j]);
 			boop++;
 		}
-	}
-}
-
-function openCell(currentId) {
-	if (!gameOver) { 
-		// maybe just get the data attribute of the cell
-		var params = currentId.split('-');
-		displayCell(params[0], params[1]);
-		var x = parseInt(params[0]);
-		var y = parseInt(params[1]);
-
-		cellValue.forEach(element => {
-			params = element.split('');
-			x = parseInt(params[1]);
-			y = parseInt(params[3]);
-
-			$(element).html(grid[x][y]);
-			$(element).attr({'class':determineColour(grid[x][y])});
-		});
-		cellValue.clear();
-
-		$('.cell').on('contextmenu', function() {
-			console.log(x + ' ' + y);
-			flag(x, y);
-		});
-		$('.grid').on('mousedown', function() {
-			$('.mr-face').text('\:O');
-		});
-		$('.grid').on('mouseup', function() {
-			if (grid[x][y] !== 'X') {
-				$('.mr-face').text('\:\)');
-			}
-			else {
-				$('.mr-face').text('X\(');
-			}
-		});
-	}
-	else if (gameOver) {
-		$('.grid').on('mousedown', function() {
-			$('.mr-face').text('X\(');
-		});
-		$('.grid').on('mouseup', function() {
-			$('.mr-face').text('X\(');
-		});
 	}
 }
 
@@ -184,6 +145,46 @@ function printGrid() {
 	$('.grid').html(print);
 }
 
+function openCell(currentId) {
+	if (!gameOver) { 
+		// maybe just get the data attribute of the cell
+		var params = currentId.split('-');
+		displayCell(params[0], params[1]);
+		var x = parseInt(params[0]);
+		var y = parseInt(params[1]);
+
+		cellValue.forEach(element => {
+			params = element.split('');
+			x = parseInt(params[1]);
+			y = parseInt(params[3]);
+
+			$(element).html(grid[x][y]);
+			$(element).attr({'class':determineColour(grid[x][y])});
+		});
+		cellValue.clear();
+
+		$('.grid').on('mousedown', function() {
+			$('.mr-face').text('\:O');
+		});
+		$('.grid').on('mouseup', function() {
+			if (grid[x][y] !== 'X') {
+				$('.mr-face').text('\:\)');
+			}
+			else {
+				$('.mr-face').text('X\(');
+			}
+		});
+	}
+	else if (gameOver) {
+		$('.grid').on('mousedown', function() {
+			$('.mr-face').text('X\(');
+		});
+		$('.grid').on('mouseup', function() {
+			$('.mr-face').text('X\(');
+		});
+	}
+}
+
 /**
  * @param {*} cell	Cell of interest
  * @returns			Class name to colour a cell
@@ -257,9 +258,10 @@ function displayCell(x, y) {
 	}
 }
 
-function changeCellState(x, y) {
-}
-
-function flag(x, y) {
+function flag(currentId) {
+	var params = currentId.split('-');
+	displayCell(params[0], params[1]);
+	var x = parseInt(params[0]);
+	var y = parseInt(params[1]);
 	document.getElementById(x + "-" + y).innerHTML = '>';
 }
