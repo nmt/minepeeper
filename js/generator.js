@@ -1,6 +1,6 @@
 $(document).ready(main);
 
-var debug = true;
+var debug = false;
 var gameOver = false;
 
 var width = 8,
@@ -115,6 +115,15 @@ function placeBombs() {
 			i--;
 		}
 	}
+}
+
+function displayBombs() {
+	bombList.forEach(element => {
+		var params = element.split('');
+		x = parseInt(params[0]);
+		y = parseInt(params[2]);
+		cellValue.add('#' + x + '-' + y);
+	});
 }
 
 /**
@@ -260,6 +269,7 @@ function displayCell(x, y) {
 
 		case 'X':
 			gameOver = true;
+			displayBombs();
 			break;
 
 		default:
@@ -267,6 +277,7 @@ function displayCell(x, y) {
 	}
 }
 
+// TODO: Prevent clicks on bombs
 function flag(currentId) {
 	var params = currentId.split('-');
 	var x = parseInt(params[0]);
