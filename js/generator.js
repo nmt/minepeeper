@@ -269,7 +269,6 @@ function displayCell(x, y) {
 
 function flag(currentId) {
 	var params = currentId.split('-');
-	displayCell(params[0], params[1]);
 	var x = parseInt(params[0]);
 	var y = parseInt(params[1]);
 	document.getElementById(x + "-" + y).innerHTML = '>';
