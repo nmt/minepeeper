@@ -6,7 +6,8 @@ var gameOver = false;
 var width = 8,
 	height = 10,
 	bombCount = 10,
-	bombList = new Set();
+	bombList = new Set(),
+	flagCount = 0;
 
 var grid = [];
 var cellValue = new Set();
@@ -25,19 +26,27 @@ function eventListeners() {
 		reset();
 	});
 
+	// Left click
 	$('.cell').click(function() {
 		openCell(this.id);
 	});
 
+	// Right click
 	$('.cell').on('contextmenu', function() {
-		console.log(this.id);
-		flag(this.id);
+		var cellClasses = $(this).attr('class');
+
+		// If cell isn't already open, open
+		if (!cellClasses.includes('open')) {
+			flag(this.id);
+			flagCount++;
+		}
 	});
 }
 
 function reset() {
 	gameOver = false;
 	bombList = new Set();
+	flagCount = 0;
 	cellValue = new Set();
 	grid = [];
 	generateGrid();
@@ -191,16 +200,16 @@ function openCell(currentId) {
  */
 function determineColour(cell) {
 	switch (cell) {
-		case 0: return 'cell hintZero';
-		case 1: return 'cell hintOne';
-		case 2: return 'cell hintTwo';
-		case 3: return 'cell hintThree';
-		case 4: return 'cell hintFour';
-		case 5: return 'cell hintFive';
-		case 6: return 'cell hintSix';
-		case 7: return 'cell hintSeven';
-		case 8: return 'cell hintEight';
-		default: return 'cell';
+		case 0: return 'cell open hintZero';
+		case 1: return 'cell open hintOne';
+		case 2: return 'cell open hintTwo';
+		case 3: return 'cell open hintThree';
+		case 4: return 'cell open hintFour';
+		case 5: return 'cell open hintFive';
+		case 6: return 'cell open hintSix';
+		case 7: return 'cell open hintSeven';
+		case 8: return 'cell open hintEight';
+		default: return 'cell open';
 	}
 }
 
