@@ -277,10 +277,19 @@ function displayCell(x, y) {
 	}
 }
 
-// TODO: Prevent clicks on bombs
 function flag(currentId) {
 	var params = currentId.split('-');
 	var x = parseInt(params[0]);
 	var y = parseInt(params[1]);
-	document.getElementById(x + "-" + y).innerHTML = '>';
+
+	var $cell = $('#' + x + "-" + y);
+
+	if ($cell.attr('data-flagged') == 'true') {
+		$cell.attr('data-flagged', false);
+		$cell.text('\\');
+	}
+	else {
+		$cell.attr('data-flagged', true);
+		$cell.text('>');
+	}
 }
