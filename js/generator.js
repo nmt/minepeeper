@@ -28,7 +28,12 @@ function eventListeners() {
 
 	// Left click
 	$('.cell').click(function() {
-		openCell(this.id);
+		if ($('#' + this.id).attr('data-flagged') == 'true') {
+			// do nothing
+		}
+		else {
+			openCell(this.id);
+		}
 	});
 
 	// Right click
@@ -61,6 +66,7 @@ function resetGrid() {
 		$(cells[i]).attr('class', 'cell');
 		$(cells[i]).text('0');
 		$(cells[i]).attr('data-value', 0);
+		$(cells[i]).attr('data-flagged', false);
 	}
 }
 
