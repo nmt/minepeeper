@@ -121,6 +121,8 @@ function placeBombs() {
 			i--;
 		}
 	}
+
+	$('.bomb-count').text(bombCount);
 }
 
 function displayBombs() {
@@ -290,12 +292,16 @@ function flag(currentId) {
 
 	var $cell = $('#' + x + "-" + y);
 
+	// Toggle flag on cell
 	if ($cell.attr('data-flagged') == 'true') {
 		$cell.attr('data-flagged', false);
 		$cell.text('\\');
+		bombCount++;
 	}
 	else {
 		$cell.attr('data-flagged', true);
 		$cell.text('>');
+		bombCount--;
 	}
+	$('.bomb-count').text(bombCount);
 }
