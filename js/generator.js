@@ -1,13 +1,13 @@
 $(document).ready(main);
 
-var debug = false;
+var debug = true;
 var gameOver = false;
 
 var width = 8,
 	height = 10,
 	bombCount = 10,
 	bombList = new Set(),
-	flagCount = 0;
+	flagCount = bombCount;
 
 var grid = [];
 var cellValue = new Set();
@@ -43,7 +43,6 @@ function eventListeners() {
 		// If cell isn't already open, open
 		if (!cellClasses.includes('open')) {
 			flag(this.id);
-			flagCount++;
 		}
 	});
 }
@@ -51,7 +50,7 @@ function eventListeners() {
 function reset() {
 	gameOver = false;
 	bombList = new Set();
-	flagCount = 0;
+	flagCount = bombCount;
 	cellValue = new Set();
 	grid = [];
 	generateGrid();
@@ -122,7 +121,7 @@ function placeBombs() {
 		}
 	}
 
-	$('.bomb-count').text(bombCount);
+	$('.bomb-count').text(flagCount);
 }
 
 function displayBombs() {
@@ -242,6 +241,7 @@ function displayCell(x, y) {
 	switch (grid[x][y]) {
 		case 0:
 			var zeroSegmentList = new Set();
+			var openedCells = new Set();
 			zeroSegmentList.add('#' + x + '-' + y);
 
 			var up, down, left, right;
@@ -263,14 +263,25 @@ function displayCell(x, y) {
 								right = (i === x) && (j === (y+1));
 								if (grid[i][j] === 0 && (up || down || left || right)) {
 									zeroSegmentList.add('#' + i + '-' + j);
-									cellValue.add('#' + i + '-' + j);
+									openedCells.add('#' + i + '-' + j);
 								}
-								if (grid[i][j] != 0) {
-									cellValue.add('#' + i + '-' + j);
+								else if (grid[i][j] != 0) {
+									openedCells.add('#' + i + '-' + j);
 								}
 							}
 						}
 					}
+				}
+			});
+
+			openedCells.forEach((element) => {
+				var numbers = element.split('');
+				x = parseInt(numbers[1]);
+				y = parseInt(numbers[3]);
+				var cell = $('#' + x + '-' + y);
+
+				if (!(cell.attr('data-flagged') == 'true')) {
+					cellValue.add('#' + x + '-' + y);
 				}
 			});
 			break;
@@ -296,12 +307,12 @@ function flag(currentId) {
 	if ($cell.attr('data-flagged') == 'true') {
 		$cell.attr('data-flagged', false);
 		$cell.text('\\');
-		bombCount++;
+		flagCount++;
 	}
 	else {
 		$cell.attr('data-flagged', true);
 		$cell.text('>');
-		bombCount--;
+		flagCount--;
 	}
-	$('.bomb-count').text(bombCount);
+	$('.bomb-count').text(flagCount);
 }
