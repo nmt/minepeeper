@@ -5,7 +5,7 @@ var gameOver = false;
 
 var width = 8,
 	height = 10,
-	bombCount = 10,
+	bombCount = 8,
 	bombList = new Set(),
 	flagCount = bombCount,
 	bombsFlagged = 0;
@@ -34,6 +34,7 @@ function eventListeners() {
 		}
 		else {
 			openCell(this.id);
+			flagLonelyBombs();
 		}
 	});
 
@@ -327,4 +328,40 @@ function flag(currentId) {
 	}
 	$('.bomb-count').text(flagCount);
 	$('.bombs-flagged-DEBUG').text(bombsFlagged);
+}
+
+function flagLonelyBombs() {
+	var params, x, y;
+	var $cell, cellClasses;
+
+	bombList.forEach(element => {
+		params = element.split('');
+		x = parseInt(params[0]);
+		y = parseInt(params[2]);
+		console.log({element});
+
+		isValid = false;
+
+		// Check the surrounding cells
+		for (var i = (x - 1); i < (x + 2); i++) {
+			if (i >= 0 && i < height) {
+				for (var j = (y - 1); j < (y + 2); j++) {
+					if (j >= 0 && j < width) {
+						$cell = $('#' + i + '-' + j);
+
+						cellClasses = $cell.attr('class');
+
+						isValid = isBomb(i,j) || cellClasses.includes('open')
+						console.log(isValid);
+
+						// debugger;
+					}
+				}
+			}
+		}
+		if (isValid) {
+			bombsFlagged++;
+			$('.bombs-flagged-DEBUG').text(bombsFlagged);
+		}
+	});
 }
