@@ -8,7 +8,7 @@ var width = 8,
 	bombCount = 8,
 	bombList = new Set(),
 	flagCount = bombCount,
-	bombsFlagged = 0;
+	bombsFlagged = new Set();
 
 var grid = [];
 var cellValue = new Set();
@@ -53,7 +53,7 @@ function reset() {
 	gameOver = false;
 	bombList = new Set();
 	flagCount = bombCount;
-	bombsFlagged = 0;
+	bombsFlagged = new Set();
 	cellValue = new Set();
 	grid = [];
 	generateGrid();
@@ -125,7 +125,7 @@ function placeBombs() {
 	}
 
 	$('.bomb-count').text(flagCount);
-	$('.bombs-flagged-DEBUG').text(bombsFlagged);
+	$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 }
 
 function displayBombs() {
@@ -314,7 +314,7 @@ function flag(currentId) {
 		flagCount++;
 
 		if (isBomb(x,y) == true) {
-			bombsFlagged--;
+			bombsFlagged.delete(currentId);
 		}
 	}
 	else {
@@ -323,11 +323,11 @@ function flag(currentId) {
 		flagCount--;
 
 		if (isBomb(x,y) == true) {
-			bombsFlagged++;
+			bombsFlagged.add(currentId);
 		}
 	}
 	$('.bomb-count').text(flagCount);
-	$('.bombs-flagged-DEBUG').text(bombsFlagged);
+	$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 }
 
 function flagLonelyBombs() {
@@ -335,10 +335,10 @@ function flagLonelyBombs() {
 	var $cell, cellClasses;
 
 	bombList.forEach(element => {
+		console.log({element});
 		params = element.split('');
 		x = parseInt(params[0]);
 		y = parseInt(params[2]);
-		console.log({element});
 
 		isValid = false;
 
@@ -350,18 +350,14 @@ function flagLonelyBombs() {
 						$cell = $('#' + i + '-' + j);
 
 						cellClasses = $cell.attr('class');
-
 						isValid = isBomb(i,j) || cellClasses.includes('open')
-						console.log(isValid);
-
-						// debugger;
 					}
 				}
 			}
 		}
 		if (isValid) {
-			bombsFlagged++;
-			$('.bombs-flagged-DEBUG').text(bombsFlagged);
+			bombsFlagged.add(x + '-' + y);
+			$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 		}
 	});
 }
