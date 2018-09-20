@@ -7,7 +7,7 @@ var width = 8,
 	height = 10,
 	bombCount = 8,
 	bombList = new Set(),
-	flagCount = bombCount,
+	flagsLeft = bombCount,
 	bombsFlagged = new Set();
 
 var grid = [];
@@ -53,7 +53,7 @@ function eventListeners() {
 function reset() {
 	gameOver = false;
 	bombList = new Set();
-	flagCount = bombCount;
+	flagsLeft = bombCount;
 	bombsFlagged = new Set();
 	cellValue = new Set();
 	grid = [];
@@ -125,7 +125,7 @@ function placeBombs() {
 		}
 	}
 
-	$('.bomb-count').text(flagCount);
+	$('.bomb-count').text(flagsLeft);
 	$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 }
 
@@ -312,7 +312,7 @@ function flag(currentId) {
 	if ($cell.attr('data-flagged') == 'true') {
 		$cell.attr('data-flagged', false);
 		$cell.text('\\');
-		flagCount++;
+		flagsLeft++;
 
 		if (isBomb(x,y) == true) {
 			bombsFlagged.delete(currentId);
@@ -321,13 +321,13 @@ function flag(currentId) {
 	else {
 		$cell.attr('data-flagged', true);
 		$cell.text('>');
-		flagCount--;
+		flagsLeft--;
 
 		if (isBomb(x,y) == true) {
 			bombsFlagged.add(currentId);
 		}
 	}
-	$('.bomb-count').text(flagCount);
+	$('.bomb-count').text(flagsLeft);
 	$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 }
 
