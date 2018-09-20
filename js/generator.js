@@ -35,6 +35,7 @@ function eventListeners() {
 		else {
 			openCell(this.id);
 			flagLonelyBombs();
+			checkIfWinrar();
 		}
 	});
 
@@ -359,4 +360,13 @@ function flagLonelyBombs() {
 			$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 		}
 	});
+}
+
+function checkIfWinrar() {
+	var allBombsFlagged = bombsFlagged.size == bombCount;
+	var allCellsOpened = false;
+
+	if (allBombsFlagged && allCellsOpened) {
+		console.log('congration your are an winrar');
+	}
 }
