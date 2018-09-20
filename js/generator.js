@@ -335,12 +335,11 @@ function flagLonelyBombs() {
 	var $cell, cellClasses;
 
 	bombList.forEach(element => {
-		console.log({element});
 		params = element.split('');
 		x = parseInt(params[0]);
 		y = parseInt(params[2]);
 
-		isValid = false;
+		var isValid = true;
 
 		// Check the surrounding cells
 		for (var i = (x - 1); i < (x + 2); i++) {
@@ -350,7 +349,7 @@ function flagLonelyBombs() {
 						$cell = $('#' + i + '-' + j);
 
 						cellClasses = $cell.attr('class');
-						isValid = isBomb(i,j) || cellClasses.includes('open')
+						isValid = isValid && (isBomb(i,j) || cellClasses.includes('open'));
 					}
 				}
 			}
