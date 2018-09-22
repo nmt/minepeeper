@@ -13,13 +13,14 @@ var width = 8,
 var grid = [];
 var cellValue = new Set();
 
-$('.mr-face').text('\:\)');
+const $mrFace = $('.mr-face');
 
 function main() {
 	generateGrid();
 	placeBombs();
 	printGrid();
 	eventListeners();
+	$mrFace.text('\:\)');
 }
 
 function eventListeners() {
@@ -29,7 +30,7 @@ function eventListeners() {
 
 	// Left click
 	$('.cell').click(function() {
-		if ($('#' + this.id).attr('data-flagged') == 'true') {
+		if (gameOver || $('#' + this.id).attr('data-flagged') == 'true') {
 			// do nothing
 		}
 		else {
@@ -39,13 +40,37 @@ function eventListeners() {
 		}
 	});
 
+	$('.cell').on('mousedown', function() {
+		if (!gameOver) {
+			var cellClasses = $(this).attr('class');
+			if (!cellClasses.includes('open')) {
+				$mrFace.text('\:O');
+			}
+		}
+	});
+	$('.cell').on('mouseup', function() {
+		if (!gameOver) {
+			var params = this.id.split('');
+			x = parseInt(params[0]);
+			y = parseInt(params[2]);
+			if (!isBomb(x,y)) {
+				$mrFace.text('\:\)');
+			}
+			else {
+				$mrFace.text('X\(');
+			}
+		}
+	});
+
 	// Right click
 	$('.cell').on('contextmenu', function() {
-		var cellClasses = $(this).attr('class');
+		if (!gameOver) {
+			var cellClasses = $(this).attr('class');
 
-		// If cell isn't already open, open
-		if (!cellClasses.includes('open')) {
-			flag(this.id);
+			// If cell isn't already open, open
+			if (!cellClasses.includes('open')) {
+				flag(this.id);
+			}
 		}
 	});
 }
@@ -57,6 +82,7 @@ function reset() {
 	bombsFlagged = new Set();
 	cellValue = new Set();
 	grid = [];
+	$mrFace.text('\:\)');
 	generateGrid();
 	resetGrid();
 	placeBombs();
@@ -176,43 +202,21 @@ function printGrid() {
 }
 
 function openCell(currentId) {
-	if (!gameOver) { 
-		// maybe just get the data attribute of the cell
-		var params = currentId.split('-');
-		displayCell(params[0], params[1]);
-		var x = parseInt(params[0]);
-		var y = parseInt(params[1]);
+	// maybe just get the data attribute of the cell
+	var params = currentId.split('-');
+	displayCell(params[0], params[1]);
+	var x = parseInt(params[0]);
+	var y = parseInt(params[1]);
 
-		cellValue.forEach(element => {
-			params = element.split('');
-			x = parseInt(params[1]);
-			y = parseInt(params[3]);
+	cellValue.forEach(element => {
+		params = element.split('');
+		x = parseInt(params[1]);
+		y = parseInt(params[3]);
 
-			$(element).html(grid[x][y]);
-			$(element).attr({'class':determineColour(grid[x][y])});
-		});
-		cellValue.clear();
-
-		$('.grid').on('mousedown', function() {
-			$('.mr-face').text('\:O');
-		});
-		$('.grid').on('mouseup', function() {
-			if (grid[x][y] !== 'X') {
-				$('.mr-face').text('\:\)');
-			}
-			else {
-				$('.mr-face').text('X\(');
-			}
-		});
-	}
-	else if (gameOver) {
-		$('.grid').on('mousedown', function() {
-			$('.mr-face').text('X\(');
-		});
-		$('.grid').on('mouseup', function() {
-			$('.mr-face').text('X\(');
-		});
-	}
+		$(element).html(grid[x][y]);
+		$(element).attr({'class':determineColour(grid[x][y])});
+	});
+	cellValue.clear();
 }
 
 /**
@@ -235,6 +239,7 @@ function determineColour(cell) {
 }
 
 function isBomb(x, y) {
+	gameOver = grid[x][y] === 'X';
 	return (grid[x][y] === 'X');
 }
 
