@@ -1,6 +1,6 @@
 $(document).ready(main);
 
-var debug = true;
+var debug = false;
 var gameOver = false;
 
 var width = 8,
@@ -363,10 +363,7 @@ function flagLonelyBombs() {
 }
 
 function checkIfWinrar() {
-	var allBombsFlagged = bombsFlagged.size == bombCount;
-	var allCellsOpened = false;
-
-	if (allBombsFlagged && allCellsOpened) {
+	if (bombsFlagged.size == bombCount) {
 		console.log('congration your are an winrar');
 	}
 }
