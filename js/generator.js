@@ -69,7 +69,7 @@ function eventListeners() {
 
 			// If cell isn't already open, open
 			if (!cellClasses.includes('open')) {
-				flag(this.id);
+				flag('#' + this.id);
 			}
 		}
 	});
@@ -142,7 +142,7 @@ function placeBombs() {
 
 		// Only place a bomb if the area is clear!
 		if (!isBomb(x,y)) {
-			bombList.add(x + ' ' + y);
+			bombList.add('#' + x + ' ' + y);
 			grid[x][y] = 'X';
 			generateHints(x,y);
 		}
@@ -152,14 +152,12 @@ function placeBombs() {
 	}
 
 	$('.bomb-count').text(flagsLeft);
-	$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 }
 
 function displayBombs() {
 	bombList.forEach(element => {
-		var params = element.split('');
-		x = parseInt(params[0]);
-		y = parseInt(params[2]);
+		x = coordinatesFromId(element)[0];
+		y = coordinatesFromId(element)[1];
 		cellValue.add('#' + x + '-' + y);
 	});
 }
@@ -209,9 +207,8 @@ function openCell(currentId) {
 	var y = parseInt(params[1]);
 
 	cellValue.forEach(element => {
-		params = element.split('');
-		x = parseInt(params[1]);
-		y = parseInt(params[3]);
+		x = coordinatesFromId(element)[0];
+		y = coordinatesFromId(element)[1];
 
 		$(element).html(grid[x][y]);
 		$(element).attr({'class':determineColour(grid[x][y])});
@@ -258,9 +255,8 @@ function displayCell(x, y) {
 
 			// Find all the connected zero values
 			zeroSegmentList.forEach((element) => {
-				var numbers = element.split('');
-				x = parseInt(numbers[1]);
-				y = parseInt(numbers[3]);
+				x = coordinatesFromId(element)[0];
+				y = coordinatesFromId(element)[1];
 
 				for (var i = (x - 1); i < (x + 2); i++) {
 					if (i >= 0 && i < height) {
@@ -285,9 +281,8 @@ function displayCell(x, y) {
 			});
 
 			openedCells.forEach((element) => {
-				var numbers = element.split('');
-				x = parseInt(numbers[1]);
-				y = parseInt(numbers[3]);
+				x = coordinatesFromId(element)[0];
+				y = coordinatesFromId(element)[1];
 				var cell = $('#' + x + '-' + y);
 
 				if (!(cell.attr('data-flagged') == 'true')) {
@@ -306,10 +301,17 @@ function displayCell(x, y) {
 	}
 }
 
+function coordinatesFromId(id) {
+	var coordinates = [],
+		numbers = id.split('');
+	coordinates[0] = parseInt(numbers[1]);
+	coordinates[1] = parseInt(numbers[3]);
+	return coordinates;
+}
+
 function flag(currentId) {
-	var params = currentId.split('-');
-	var x = parseInt(params[0]);
-	var y = parseInt(params[1]);
+	x = coordinatesFromId(currentId)[0];
+	y = coordinatesFromId(currentId)[1];
 
 	var $cell = $('#' + x + "-" + y);
 
@@ -333,7 +335,6 @@ function flag(currentId) {
 		}
 	}
 	$('.bomb-count').text(flagsLeft);
-	$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 }
 
 function flagLonelyBombs() {
@@ -341,9 +342,8 @@ function flagLonelyBombs() {
 	var $cell, cellClasses;
 
 	bombList.forEach(element => {
-		params = element.split('');
-		x = parseInt(params[0]);
-		y = parseInt(params[2]);
+		x = coordinatesFromId(element)[0];
+		y = coordinatesFromId(element)[1];
 
 		var isValid = true;
 
@@ -362,7 +362,6 @@ function flagLonelyBombs() {
 		}
 		if (isValid) {
 			bombsFlagged.add(x + '-' + y);
-			$('.bombs-flagged-DEBUG').text(bombsFlagged.size);
 		}
 	});
 }
