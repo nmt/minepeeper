@@ -37,33 +37,34 @@ function eventListeners() {
 			openCell(this.id);
 			flagLonelyBombs();
 			checkIfWinrar();
-		}
-	});
 
-	$('.cell').on('mousedown', function() {
-		if (!gameOver) {
-			var cellClasses = $(this).attr('class');
-			if (!cellClasses.includes('open')) {
-				$mrFace.text('\:O');
-			}
-		}
-	});
-	$('.cell').on('mouseup', function() {
-		if (!gameOver) {
-			var params = this.id.split('');
-			x = parseInt(params[0]);
-			y = parseInt(params[2]);
-			if (!isBomb(x,y)) {
-				$mrFace.text('\:\)');
-			}
-			else {
-				$mrFace.text('X\(');
-			}
+			$('.cell').on('mousedown', function() {
+				if (!gameOver) {
+					var cellClasses = $(this).attr('class');
+					if (!cellClasses.includes('open')) {
+						$mrFace.text('\:O');
+					}
+				}
+			});
+			$('.cell').on('mouseup', function() {
+				if (!gameOver) {
+					var params = this.id.split('');
+					x = parseInt(params[0]);
+					y = parseInt(params[2]);
+					if (!isBomb(x,y)) {
+						$mrFace.text('\:\)');
+					}
+					else {
+						$mrFace.text('X\(');
+					}
+				}
+			});
 		}
 	});
 
 	// Right click
 	$('.cell').on('contextmenu', function() {
+		console.log(gameOver);
 		if (!gameOver) {
 			var cellClasses = $(this).attr('class');
 
@@ -236,7 +237,6 @@ function determineColour(cell) {
 }
 
 function isBomb(x, y) {
-	gameOver = grid[x][y] === 'X';
 	return (grid[x][y] === 'X');
 }
 
