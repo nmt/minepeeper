@@ -13,14 +13,18 @@ var width = 8,
 var grid = [];
 var cellValue = new Set();
 
-const $mrFace = $('.mr-face');
+const SETTINGS = {
+	CLASSES: {
+		MR_FACE: $('.mr-face')
+	}
+};
 
 function main() {
 	generateGrid();
 	placeBombs();
 	printGrid();
 	eventListeners();
-	$mrFace.text('\:\)');
+	SETTINGS.CLASSES.MR_FACE.text('\:\)');
 }
 
 function eventListeners() {
@@ -42,7 +46,7 @@ function eventListeners() {
 				if (!gameOver) {
 					var cellClasses = $(this).attr('class');
 					if (!cellClasses.includes('open')) {
-						$mrFace.text('\:O');
+						SETTINGS.CLASSES.MR_FACE.text('\:O');
 					}
 				}
 			});
@@ -52,10 +56,10 @@ function eventListeners() {
 					x = parseInt(params[0]);
 					y = parseInt(params[2]);
 					if (!isBomb(x,y)) {
-						$mrFace.text('\:\)');
+						SETTINGS.CLASSES.MR_FACE.text('\:\)');
 					}
 					else {
-						$mrFace.text('X\(');
+						SETTINGS.CLASSES.MR_FACE.text('X\(');
 					}
 				}
 			});
@@ -83,7 +87,7 @@ function reset() {
 	bombsFlagged = new Set();
 	cellValue = new Set();
 	grid = [];
-	$mrFace.text('\:\)');
+	SETTINGS.CLASSES.MR_FACE.text('\:\)');
 	generateGrid();
 	resetGrid();
 	placeBombs();
@@ -102,18 +106,18 @@ function resetGrid() {
 
 function reprintGrid() {
 	var cells = $('.cell');
-	var boop = 0;
+	var counter = 0;
 
 	for (var i = 0; i < height; i++) {
 		for (var j = 0; j < width; j++) {
 			if (debug == true) {
-				$(cells[boop]).text(grid[i][j]);
+				$(cells[counter]).text(grid[i][j]);
 			}
 			else {
-				$(cells[boop]).text('\\');
+				$(cells[counter]).text('\\');
 			}
-			$(cells[boop]).attr('data-value', grid[i][j]);
-			boop++;
+			$(cells[counter]).attr('data-value', grid[i][j]);
+			counter++;
 		}
 	}
 }
