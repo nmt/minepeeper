@@ -32,8 +32,17 @@ function eventListeners() {
 		reset();
 	});
 
-	// Left click
-	$('.cell').click(function() {
+	$('.cell').on('mousedown', function(e) {
+		console.log(e.which);
+		if (!gameOver) {
+			var cellClasses = $(this).attr('class');
+			if (!cellClasses.includes('open')) {
+				SETTINGS.CLASSES.MR_FACE.text('\:O');
+			}
+		}
+	});
+
+	$('.cell').on('mouseup', function() {
 		if (gameOver || $('#' + this.id).attr('data-flagged') == 'true') {
 			// do nothing
 		}
@@ -41,28 +50,17 @@ function eventListeners() {
 			openCell(this.id);
 			flagLonelyBombs();
 			checkIfWinrar();
-
-			$('.cell').on('mousedown', function() {
-				if (!gameOver) {
-					var cellClasses = $(this).attr('class');
-					if (!cellClasses.includes('open')) {
-						SETTINGS.CLASSES.MR_FACE.text('\:O');
-					}
-				}
-			});
-			$('.cell').on('mouseup', function() {
-				if (!gameOver) {
-					var params = this.id.split('');
-					x = parseInt(params[0]);
-					y = parseInt(params[2]);
-					if (!isBomb(x,y)) {
-						SETTINGS.CLASSES.MR_FACE.text('\:\)');
-					}
-					else {
-						SETTINGS.CLASSES.MR_FACE.text('X\(');
-					}
-				}
-			});
+		}
+		if (!gameOver) {
+			var params = this.id.split('');
+			x = parseInt(params[0]);
+			y = parseInt(params[2]);
+			if (!isBomb(x,y)) {
+				SETTINGS.CLASSES.MR_FACE.text('\:\)');
+			}
+			else {
+				SETTINGS.CLASSES.MR_FACE.text('X\(');
+			}
 		}
 	});
 
