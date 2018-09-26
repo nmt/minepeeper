@@ -28,53 +28,50 @@ function main() {
 }
 
 function eventListeners() {
-	$('.reset-button').click(function() {
-		reset();
-	});
-
-	$('.cell').on('mousedown', function(e) {
-		console.log(e.which);
+	$('.cell').on('mousedown', function(event) {
 		if (!gameOver) {
-			var cellClasses = $(this).attr('class');
-			if (!cellClasses.includes('open')) {
-				SETTINGS.CLASSES.MR_FACE.text('\:O');
+			if (event.which == 1) {
+				var cellClasses = $(this).attr('class');
+				if (!cellClasses.includes('open')) {
+					SETTINGS.CLASSES.MR_FACE.text('\:O');
+				}
+			}
+			else if (event.which == 3) {
+				var cellClasses = $(this).attr('class');
+	
+				// If cell isn't already open, open
+				if (!cellClasses.includes('open')) {
+					flag('#' + this.id);
+				}
 			}
 		}
 	});
 
-	$('.cell').on('mouseup', function() {
-		if (gameOver || $('#' + this.id).attr('data-flagged') == 'true') {
-			// do nothing
-		}
-		else {
-			openCell(this.id);
-			flagLonelyBombs();
-			checkIfWinrar();
-		}
-		if (!gameOver) {
-			var params = this.id.split('');
-			x = parseInt(params[0]);
-			y = parseInt(params[2]);
-			if (!isBomb(x,y)) {
-				SETTINGS.CLASSES.MR_FACE.text('\:\)');
+	$('.cell').on('mouseup', function(event) {
+		if (!gameOver && event.which == 1) {
+			if ($('#' + this.id).attr('data-flagged') == 'true') {
+				// do nothing
 			}
 			else {
-				SETTINGS.CLASSES.MR_FACE.text('X\(');
+				openCell(this.id);
+
+				var params = this.id.split('');
+				x = parseInt(params[0]);
+				y = parseInt(params[2]);
+				if (!isBomb(x,y)) {
+					SETTINGS.CLASSES.MR_FACE.text('\:\)');
+				}
+				else {
+					SETTINGS.CLASSES.MR_FACE.text('X\(');
+				}
 			}
 		}
+		flagLonelyBombs();
+		checkIfWinrar();
 	});
 
-	// Right click
-	$('.cell').on('contextmenu', function() {
-		console.log(gameOver);
-		if (!gameOver) {
-			var cellClasses = $(this).attr('class');
-
-			// If cell isn't already open, open
-			if (!cellClasses.includes('open')) {
-				flag('#' + this.id);
-			}
-		}
+	$('.reset-button').click(function() {
+		reset();
 	});
 }
 
