@@ -16,6 +16,12 @@ var cellValue = new Set();
 const SETTINGS = {
 	CLASSES: {
 		MR_FACE: $('.mr-face')
+	},
+	FACES: {
+		SMILE: ':)',
+		SURPRISE: ':O',
+		WIN: 'B)',
+		DEAD: 'X('
 	}
 };
 
@@ -24,21 +30,22 @@ function main() {
 	placeBombs();
 	printGrid();
 	eventListeners();
-	SETTINGS.CLASSES.MR_FACE.text('\:\)');
+	SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SMILE);
 }
 
 function eventListeners() {
 	$('.cell').on('mousedown', function(event) {
 		if (!gameOver) {
+			var cellClasses = $(this).attr('class');
+
+			// Left click
 			if (event.which == 1) {
-				var cellClasses = $(this).attr('class');
 				if (!cellClasses.includes('open')) {
-					SETTINGS.CLASSES.MR_FACE.text('\:O');
+					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SURPRISE);
 				}
 			}
+			// Right click
 			else if (event.which == 3) {
-				var cellClasses = $(this).attr('class');
-	
 				// If cell isn't already open, open
 				if (!cellClasses.includes('open')) {
 					flag('#' + this.id);
@@ -48,9 +55,10 @@ function eventListeners() {
 	});
 
 	$('.cell').on('mouseup', function(event) {
+		// Mouseup only reacts to left clicks
 		if (!gameOver && event.which == 1) {
 			if ($('#' + this.id).attr('data-flagged') == 'true') {
-				// do nothing
+				// Do nothing
 			}
 			else {
 				openCell(this.id);
@@ -59,10 +67,10 @@ function eventListeners() {
 				x = parseInt(params[0]);
 				y = parseInt(params[2]);
 				if (!isBomb(x,y)) {
-					SETTINGS.CLASSES.MR_FACE.text('\:\)');
+					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SMILE);
 				}
 				else {
-					SETTINGS.CLASSES.MR_FACE.text('X\(');
+					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.DEAD);
 				}
 			}
 		}
@@ -82,7 +90,7 @@ function reset() {
 	bombsFlagged = new Set();
 	cellValue = new Set();
 	grid = [];
-	SETTINGS.CLASSES.MR_FACE.text('\:\)');
+	SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SMILE);
 	generateGrid();
 	resetGrid();
 	placeBombs();
@@ -331,7 +339,6 @@ function flag(currentId) {
 
 		if (isBomb(x,y) == true) {
 			bombsFlagged.add(currentId);
-			console.log(currentId);
 		}
 	}
 	$('.bomb-count').text(flagsLeft);
@@ -368,10 +375,8 @@ function flagLonelyBombs() {
 
 function checkIfWinrar() {
 	if (bombsFlagged.size == bombCount) {
-		console.log({bombsFlagged});
-		console.log({bombCount});
 		gameOver = true;
-		SETTINGS.CLASSES.MR_FACE.text('B\)');
+		SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.WIN);
 		console.log('congration your are an winrar');
 	}
 }
