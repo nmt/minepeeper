@@ -17,20 +17,38 @@ const SETTINGS = {
 	CLASSES: {
 		MR_FACE: $('.mr-face')
 	},
-	FACES: {
+	ELEMENTS: {
 		SMILE: ':)',
 		SURPRISE: ':O',
 		WIN: 'B)',
-		DEAD: 'X('
+		DEAD: 'X(',
+		EMPTY: ' ',
+		ONE: '1',
+		TWO: '2',
+		THREE: '3',
+		FOUR: '4',
+		FIVE: '5',
+		SIX: '6',
+		SEVEN: '7',
+		EIGHT: '8',
+		UNOPENED: '\\',
+		FLAGGED: '>'
+	},
+	ELEMENTS_EMOJI: {
+		SMILE: '😊',
+		SURPRISE: '😮',
+		WIN: '😎',
+		DEAD: '😵'
 	}
 };
 
 function main() {
+	// SETTINGS.ELEMENTS = SETTINGS.ELEMENTS_EMOJI;
 	generateGrid();
 	placeBombs();
 	printGrid();
 	eventListeners();
-	SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SMILE);
+	SETTINGS.CLASSES.MR_FACE.text(SETTINGS.ELEMENTS.SMILE);
 }
 
 function eventListeners() {
@@ -41,7 +59,7 @@ function eventListeners() {
 			// Left click
 			if (event.which == 1) {
 				if (!cellClasses.includes('open')) {
-					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SURPRISE);
+					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.ELEMENTS.SURPRISE);
 				}
 			}
 			// Right click
@@ -67,10 +85,10 @@ function eventListeners() {
 				x = parseInt(params[0]);
 				y = parseInt(params[2]);
 				if (!isBomb(x,y)) {
-					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SMILE);
+					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.ELEMENTS.SMILE);
 				}
 				else {
-					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.DEAD);
+					SETTINGS.CLASSES.MR_FACE.text(SETTINGS.ELEMENTS.DEAD);
 				}
 			}
 		}
@@ -90,7 +108,7 @@ function reset() {
 	bombsFlagged = new Set();
 	cellValue = new Set();
 	grid = [];
-	SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.SMILE);
+	SETTINGS.CLASSES.MR_FACE.text(SETTINGS.ELEMENTS.SMILE);
 	generateGrid();
 	resetGrid();
 	placeBombs();
@@ -117,7 +135,7 @@ function reprintGrid() {
 				$(cells[counter]).text(grid[i][j]);
 			}
 			else {
-				$(cells[counter]).text('\\');
+				$(cells[counter]).text(SETTINGS.ELEMENTS.UNOPENED);
 			}
 			$(cells[counter]).attr('data-value', grid[i][j]);
 			counter++;
@@ -325,7 +343,7 @@ function flag(currentId) {
 	// Toggle flag on cell
 	if ($cell.attr('data-flagged') == 'true') {
 		$cell.attr('data-flagged', false);
-		$cell.text('\\');
+		$cell.text(SETTINGS.ELEMENTS.UNOPENED);
 		flagsLeft++;
 
 		if (isBomb(x,y) == true) {
@@ -334,7 +352,7 @@ function flag(currentId) {
 	}
 	else {
 		$cell.attr('data-flagged', true);
-		$cell.text('>');
+		$cell.text(SETTINGS.ELEMENTS.FLAGGED);
 		flagsLeft--;
 
 		if (isBomb(x,y) == true) {
@@ -345,7 +363,7 @@ function flag(currentId) {
 }
 
 function flagLonelyBombs() {
-	var params, x, y;
+	var x, y;
 	var $cell, cellClasses;
 
 	bombList.forEach(element => {
@@ -376,7 +394,7 @@ function flagLonelyBombs() {
 function checkIfWinrar() {
 	if (bombsFlagged.size == bombCount) {
 		gameOver = true;
-		SETTINGS.CLASSES.MR_FACE.text(SETTINGS.FACES.WIN);
+		SETTINGS.CLASSES.MR_FACE.text(SETTINGS.ELEMENTS.WIN);
 		console.log('congration your are an winrar');
 	}
 }
