@@ -237,7 +237,7 @@ function openCell(currentId) {
 		y = coordinatesFromId(element)[1];
 
 		$(element).html(grid[x][y]);
-		$(element).attr({'class':determineColour(grid[x][y])});
+		$(element).attr({'class':determineColour($(element).attr('data-value'))});
 	});
 	cellValue.clear();
 }
@@ -248,15 +248,15 @@ function openCell(currentId) {
  */
 function determineColour(cell) {
 	switch (cell) {
-		case 0: return 'cell open hintZero';
-		case 1: return 'cell open hintOne';
-		case 2: return 'cell open hintTwo';
-		case 3: return 'cell open hintThree';
-		case 4: return 'cell open hintFour';
-		case 5: return 'cell open hintFive';
-		case 6: return 'cell open hintSix';
-		case 7: return 'cell open hintSeven';
-		case 8: return 'cell open hintEight';
+		case '0': return 'cell open hintZero';
+		case '1': return 'cell open hintOne';
+		case '2': return 'cell open hintTwo';
+		case '3': return 'cell open hintThree';
+		case '4': return 'cell open hintFour';
+		case '5': return 'cell open hintFive';
+		case '6': return 'cell open hintSix';
+		case '7': return 'cell open hintSeven';
+		case '8': return 'cell open hintEight';
 		default: return 'cell open';
 	}
 }
