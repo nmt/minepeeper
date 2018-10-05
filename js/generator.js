@@ -38,12 +38,23 @@ const SETTINGS = {
 		SMILE: '😊',
 		SURPRISE: '😮',
 		WIN: '😎',
-		DEAD: '😵'
+		DEAD: '😵',
+		EMPTY: '0️⃣',
+		ONE: '1️⃣',
+		TWO: '2️⃣ ',
+		THREE: '3️⃣',
+		FOUR: '4️⃣',
+		FIVE: '5️⃣',
+		SIX: '6️⃣',
+		SEVEN: '7️⃣',
+		EIGHT: '8️⃣',
+		UNOPENED: '⏹',
+		FLAGGED: '🚩'
 	}
 };
 
 function main() {
-	// SETTINGS.ELEMENTS = SETTINGS.ELEMENTS_EMOJI;
+	SETTINGS.ELEMENTS = SETTINGS.ELEMENTS_EMOJI;
 	generateGrid();
 	placeBombs();
 	printGrid();
@@ -236,8 +247,19 @@ function openCell(currentId) {
 		x = coordinatesFromId(element)[0];
 		y = coordinatesFromId(element)[1];
 
-		$(element).html(grid[x][y]);
 		$(element).attr({'class':determineColour($(element).attr('data-value'))});
+		switch (grid[x][y]) {
+			case 0: $(element).html(grid[x][y]);
+			case 1: $(element).html(grid[x][y]);
+			case 2: $(element).html(grid[x][y]);
+			case 3: $(element).html(grid[x][y]);
+			case 4: $(element).html(grid[x][y]);
+			case 5: $(element).html(grid[x][y]);
+			case 6: $(element).html(grid[x][y]);
+			case 7: $(element).html(grid[x][y]);
+			case 8: $(element).html(grid[x][y]);
+			default: break;
+		}
 	});
 	cellValue.clear();
 }
