@@ -225,7 +225,7 @@ function printGrid() {
 	for (var i = 0; i < height; i++) {
 		for (var j = 0; j < width; j++) {
 			if (debug === false) {
-				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-value=\"' + grid[i][j] + '\"\>' + '\\' + '</div>';
+				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-value=\"' + grid[i][j] + '\"\>' + SETTINGS.ELEMENTS.UNOPENED + '</div>';
 			}
 			else {
 				print += '<div class="cell" id=\"' + i + '-' + j + '\"' + ' data-value=\"' + grid[i][j] + '\"\>' + grid[i][j] + '</div>';
