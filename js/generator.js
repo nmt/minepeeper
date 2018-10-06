@@ -246,20 +246,14 @@ function openCell(currentId) {
 	cellValue.forEach(element => {
 		x = coordinatesFromId(element)[0];
 		y = coordinatesFromId(element)[1];
-
-		$(element).attr({'class':determineColour($(element).attr('data-value'))});
-		switch (grid[x][y]) {
-			case 0: $(element).html(grid[x][y]);
-			case 1: $(element).html(grid[x][y]);
-			case 2: $(element).html(grid[x][y]);
-			case 3: $(element).html(grid[x][y]);
-			case 4: $(element).html(grid[x][y]);
-			case 5: $(element).html(grid[x][y]);
-			case 6: $(element).html(grid[x][y]);
-			case 7: $(element).html(grid[x][y]);
-			case 8: $(element).html(grid[x][y]);
-			default: break;
+		
+		if (grid[x][y] == 1) {
+			$(element).html('1');
 		}
+		else if (grid[x][y] == 2) {
+			$(element).html('2');
+		}
+		$(element).attr({'class':determineColour($(element).attr('data-value'))});
 	});
 	cellValue.clear();
 }
