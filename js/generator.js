@@ -247,13 +247,36 @@ function openCell(currentId) {
 		x = coordinatesFromId(element)[0];
 		y = coordinatesFromId(element)[1];
 		
-		if (grid[x][y] == 1) {
-			$(element).html('1');
-		}
-		else if (grid[x][y] == 2) {
-			$(element).html('2');
-		}
 		$(element).attr({'class':determineColour($(element).attr('data-value'))});
+		switch (grid[x][y]){
+			case 1:
+				$(element).html(SETTINGS.ELEMENTS.ONE);
+				break;
+			case 2:
+				$(element).html(SETTINGS.ELEMENTS.TWO);
+				break;
+			case 3:
+				$(element).html(SETTINGS.ELEMENTS.THREE);
+				break;
+			case 4:
+				$(element).html(SETTINGS.ELEMENTS.FOUR);
+				break;
+			case 5:
+				$(element).html(SETTINGS.ELEMENTS.FIVE);
+				break;
+			case 6:
+				$(element).html(SETTINGS.ELEMENTS.SIX);
+				break;
+			case 7:
+				$(element).html(SETTINGS.ELEMENTS.SEVEN);
+				break;
+			case 8:
+				$(element).html(SETTINGS.ELEMENTS.EIGHT);
+				break;
+			default:
+				$(element).html(grid[x][y]);
+				break;
+		}
 	});
 	cellValue.clear();
 }
