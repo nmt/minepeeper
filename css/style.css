@@ -3,6 +3,9 @@
 	font-size: 20px;
 	white-space: pre-line;
 	user-select: none;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .cell {

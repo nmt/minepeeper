@@ -1,5 +1,7 @@
 # To-do
 
+- Auto-prefixing
+- Sass
 - Undo option
     - Have a checkbox ("Safe Mode" or something)
     - If Safe Mode is checked, (probably don't worry about actually implementing a checkbox - a hardcoded const will do for now) then when they click on a bomb, it displays only the one bomb that was clicked, and they die
