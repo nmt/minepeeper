@@ -32,6 +32,7 @@ const SETTINGS = {
 		SEVEN: '7',
 		EIGHT: '8',
 		UNOPENED: '\\',
+		BOMB: 'X',
 		FLAGGED: '>'
 	},
 	ELEMENTS_EMOJI: {
@@ -49,6 +50,7 @@ const SETTINGS = {
 		SEVEN: '7️⃣',
 		EIGHT: '8️⃣',
 		UNOPENED: '⏹',
+		BOMB: '💣',
 		FLAGGED: '🚩'
 	}
 };
@@ -272,6 +274,9 @@ function openCell(currentId) {
 				break;
 			case 8:
 				$(element).html(SETTINGS.ELEMENTS.EIGHT);
+				break;
+			case 'X':
+				$(element).html(SETTINGS.ELEMENTS.BOMB);
 				break;
 			default:
 				$(element).html(grid[x][y]);
