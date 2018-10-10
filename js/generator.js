@@ -1,17 +1,16 @@
 $(document).ready(main);
 
 var debug = false;
-var gameOver = false;
 
 var width = 8,
 	height = 10,
 	bombCount = 8,
 	bombList = new Set(),
 	flagsLeft = bombCount,
-	bombsFlagged = new Set();
-
-var grid = [];
-var cellValue = new Set();
+	bombsFlagged = new Set(),
+	gameOver = false,
+	cellValue = new Set(),
+	grid = [];
 
 const SETTINGS = {
 	CLASSES: {
@@ -22,7 +21,6 @@ const SETTINGS = {
 		SURPRISE: ':O',
 		WIN: 'B)',
 		DEAD: 'X(',
-		EMPTY: ' ',
 		ONE: '1',
 		TWO: '2',
 		THREE: '3',
@@ -40,7 +38,6 @@ const SETTINGS = {
 		SURPRISE: '😮',
 		WIN: '😎',
 		DEAD: '😵',
-		EMPTY: '0️⃣',
 		ONE: '1️⃣',
 		TWO: '2️⃣ ',
 		THREE: '3️⃣',

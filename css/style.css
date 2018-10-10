@@ -1,3 +1,8 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
 .grid {
 	font-family: monospace;
 	font-size: 20px;
@@ -5,7 +10,8 @@
 	user-select: none;
     width: 200px;
     display: flex;
-    flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin: 0 auto;
 }
 
 .cell {
