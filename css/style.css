@@ -3,6 +3,18 @@ body {
 	text-align: center;
 }
 
+.top {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    width: 35%;
+    margin: 0 auto;
+}
+
+.top > div {
+	flex: 1;
+}
+
 .footer {
 	margin-top: 20px;
 }
