@@ -3,6 +3,10 @@ body {
 	text-align: center;
 }
 
+.footer {
+	margin-top: 20px;
+}
+
 .grid {
 	font-family: monospace;
 	font-size: 20px;
