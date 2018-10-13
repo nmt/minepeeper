@@ -8,7 +8,8 @@ body {
     justify-content: center;
     align-content: space-between;
     width: 35%;
-    margin: 0 auto;
+	margin: 0 auto;
+	line-height: 30px;
 }
 
 .top > div {
