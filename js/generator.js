@@ -94,8 +94,8 @@ function eventListeners() {
 			}
 			// Right click
 			else if (event.which == 3) {
-				// If cell isn't already open, open
-				if (!cellClasses.includes('open') && flagsLeft > 0) {
+				// Can only flag unopened cells
+				if (!cellClasses.includes('open')) {
 					flag('#' + this.id);
 				}
 			}
@@ -415,12 +415,14 @@ function flag(currentId) {
 		}
 	}
 	else {
-		$cell.attr('data-flagged', true);
-		$cell.html(SETTINGS.ELEMENTS.FLAGGED);
-		flagsLeft--;
+		if (flagsLeft > 0) {
+			$cell.attr('data-flagged', true);
+			$cell.html(SETTINGS.ELEMENTS.FLAGGED);
+			flagsLeft--;
 
-		if (isBomb(x,y) == true) {
-			bombsFlagged.add(currentId);
+			if (isBomb(x,y) == true) {
+				bombsFlagged.add(currentId);
+			}
 		}
 	}
 	$('.bomb-count').text(flagsLeft);
