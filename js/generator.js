@@ -95,7 +95,7 @@ function eventListeners() {
 			// Right click
 			else if (event.which == 3) {
 				// If cell isn't already open, open
-				if (!cellClasses.includes('open')) {
+				if (!cellClasses.includes('open') && flagsLeft > 0) {
 					flag('#' + this.id);
 				}
 			}
@@ -312,7 +312,7 @@ function openCell(currentId) {
  */
 function determineColour(cell) {
 	switch (cell) {
-		case '0': return 'cell open opened';
+		case '0': return 'cell open hintZero';
 		case '1': return 'cell open hintOne';
 		case '2': return 'cell open hintTwo';
 		case '3': return 'cell open hintThree';
