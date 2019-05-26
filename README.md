@@ -4,4 +4,6 @@ It's just Minesweeper.
 
 [Do a mineswep](https://nm-t.github.io/minepeeper/)
 
-Mineswept? Minesweeped!
+## To-do
+- Add countup timer
+- Windows 98 styling
