@@ -12,31 +12,31 @@ type CellType =
   | "flag"
   | "question";
 
-export const cell = (cellType: CellType) => {
+export const Cell = (cellType: CellType) => {
   switch (cellType) {
     case "empty":
-      return "🟩";
+      return <>🟩</>;
     case "one":
-      return "🐍";
+      return <>"🐍"</>;
     case "two":
-      return "🍎";
+      return <>"🍎"</>;
     case "three":
-      return "🧱";
+      return <>"🧱"</>;
     case "four":
-      return "four";
+      return <>"four"</>;
     case "five":
-      return "five";
+      return <>"five"</>;
     case "six":
-      return "six";
+      return <>"six"</>;
     case "seven":
-      return "seven";
+      return <>"seven"</>;
     case "eight":
-      return "eight";
+      return <>"eight"</>;
     case "bomb":
-      return "bomb";
+      return <>"bomb"</>;
     case "flag":
-      return "flag";
+      return <>"flag"</>;
     case "question":
-      return "question";
+      return <>"question"</>;
   }
 };
