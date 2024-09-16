@@ -17,26 +17,26 @@ export const Cell = (cellType: CellType) => {
     case "empty":
       return <>🟩</>;
     case "one":
-      return <>"🐍"</>;
+      return <>1️⃣</>;
     case "two":
-      return <>"🍎"</>;
+      return <>2️⃣ </>;
     case "three":
-      return <>"🧱"</>;
+      return <>3️⃣</>;
     case "four":
-      return <>"four"</>;
+      return <>4️⃣</>;
     case "five":
-      return <>"five"</>;
+      return <>5️⃣</>;
     case "six":
-      return <>"six"</>;
+      return <>6️⃣</>;
     case "seven":
-      return <>"seven"</>;
+      return <>7️⃣</>;
     case "eight":
-      return <>"eight"</>;
+      return <>8️⃣</>;
     case "bomb":
-      return <>"bomb"</>;
+      return <>💣</>;
     case "flag":
-      return <>"flag"</>;
+      return <>🚩</>;
     case "question":
-      return <>"question"</>;
+      return <>❓</>;
   }
 };
