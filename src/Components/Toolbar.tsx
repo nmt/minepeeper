@@ -6,7 +6,7 @@ export const Toolbar = () => {
   return (
     <>
       <BombCount />
-      <MrFace />
+      <MrFace status={"alive"} />
       <Timer />
     </>
   );
