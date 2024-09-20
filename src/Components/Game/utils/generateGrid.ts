@@ -1,13 +1,12 @@
-let grid: number[][] = [];
-
 export const generateGrid = ({
   width,
   height,
 }: {
   width: number;
   height: number;
-}): any => {
-  // Height
+}): number[][] => {
+  let grid: number[][] = [];
+
   for (let i = 0; i < height; i++) {
     let row = [];
     for (let j = 0; j < width; j++) {
@@ -15,18 +14,29 @@ export const generateGrid = ({
     }
     grid.push(row);
   }
+
   return grid;
 };
 
-export const isBomb = (x: number, y: number): boolean => {
+export const isBomb = ({
+  grid,
+  x,
+  y,
+}: {
+  grid: number[][];
+  x: number;
+  y: number;
+}): boolean => {
   return grid[x][y] === -1;
 };
 
-const placeBombs = ({
+export const placeBombs = ({
+  grid,
   bombCount,
   width,
   height,
 }: {
+  grid: number[][];
   bombCount: number;
   width: number;
   height: number;
@@ -38,8 +48,7 @@ const placeBombs = ({
     y = Math.floor(Math.random() * width);
 
     // Only place a bomb if the area is clear!
-    if (!isBomb(x, y)) {
-      // bombList.add("#" + x + " " + y);
+    if (!isBomb({ grid, x, y })) {
       grid[x][y] = -1;
     } else {
       i--;
