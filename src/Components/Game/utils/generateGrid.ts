@@ -27,7 +27,7 @@ export const isBomb = ({
   x: number;
   y: number;
 }): boolean => {
-  return grid[x][y] === -1;
+  return grid[y][x] === -1;
 };
 
 export const placeBombs = ({
@@ -41,17 +41,18 @@ export const placeBombs = ({
   width: number;
   height: number;
 }): void => {
-  var x, y;
+  const moreBombsThanGridSpace = bombCount > width * height;
+  if (bombCount > 0 && !moreBombsThanGridSpace) {
+    for (let i = 0; i < bombCount; i++) {
+      const x = Math.floor(Math.random() * height);
+      const y = Math.floor(Math.random() * width);
 
-  for (var i = 0; i < bombCount; i++) {
-    x = Math.floor(Math.random() * height);
-    y = Math.floor(Math.random() * width);
-
-    // Only place a bomb if the area is clear!
-    if (!isBomb({ grid, x, y })) {
-      grid[x][y] = -1;
-    } else {
-      i--;
+      // Only place a bomb if the area is clear!
+      if (!isBomb({ grid, x, y })) {
+        grid[x][y] = -1;
+      } else {
+        i--;
+      }
     }
   }
 };
