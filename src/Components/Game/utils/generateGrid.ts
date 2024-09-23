@@ -1,11 +1,13 @@
+export type Grid = number[][];
+
 export const generateGrid = ({
   width,
   height,
 }: {
   width: number;
   height: number;
-}): number[][] => {
-  let grid: number[][] = [];
+}): Grid => {
+  let grid = [];
 
   for (let i = 0; i < height; i++) {
     let row = [];
@@ -23,7 +25,7 @@ export const isBomb = ({
   x,
   y,
 }: {
-  grid: number[][];
+  grid: Grid;
   x: number;
   y: number;
 }): boolean => {
@@ -36,11 +38,11 @@ export const placeBombs = ({
   width,
   height,
 }: {
-  grid: number[][];
+  grid: Grid;
   bombCount: number;
   width: number;
   height: number;
-}): void => {
+}): Grid => {
   const moreBombsThanGridSpace = bombCount > width * height;
   if (bombCount > 0 && !moreBombsThanGridSpace) {
     for (let i = 0; i < bombCount; i++) {
@@ -55,4 +57,5 @@ export const placeBombs = ({
       }
     }
   }
+  return grid;
 };

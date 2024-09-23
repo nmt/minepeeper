@@ -46,12 +46,12 @@ describe("generateGrid", () => {
       "should place $expected bombs on the $width x $height grid when bombCount is $bombCount",
       ({ bombCount, width, height, expected }) => {
         const grid = generateGrid({ width, height });
-        placeBombs({ grid, bombCount, width, height });
+        const bombedGrid = placeBombs({ grid, bombCount, width, height });
 
         let count = 0;
         for (let i = 0; i < height; i++) {
           for (let j = 0; j < width; j++) {
-            if (grid[i][j] === -1) {
+            if (bombedGrid[i][j] === -1) {
               count++;
             }
           }
