@@ -1,4 +1,4 @@
-type CellType =
+export type CellType =
   | "empty"
   | "one"
   | "two"
@@ -12,10 +12,10 @@ type CellType =
   | "flag"
   | "question";
 
-export const Cell = (cellType: CellType) => {
+export const Cell = ({ cellType }: { cellType: string }) => {
   switch (cellType) {
     case "empty":
-      return <>🟩</>;
+      return <>⬜️</>;
     case "one":
       return <>1️⃣</>;
     case "two":
@@ -38,5 +38,7 @@ export const Cell = (cellType: CellType) => {
       return <>🚩</>;
     case "question":
       return <>❓</>;
+    default:
+      return <></>;
   }
 };
