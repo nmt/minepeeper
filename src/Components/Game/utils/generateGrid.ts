@@ -1,4 +1,6 @@
-export type Grid = number[][];
+import { CellType } from "./Cell";
+
+export type Grid = CellType[][];
 
 export const generateGrid = ({
   width,
@@ -12,12 +14,12 @@ export const generateGrid = ({
   for (let i = 0; i < height; i++) {
     let row = [];
     for (let j = 0; j < width; j++) {
-      row.push(0);
+      row.push("empty");
     }
     grid.push(row);
   }
 
-  return grid;
+  return grid as Grid; // TODO: Fix this type
 };
 
 export const isBomb = ({
@@ -29,7 +31,7 @@ export const isBomb = ({
   x: number;
   y: number;
 }): boolean => {
-  return grid[y][x] === -1;
+  return grid[y][x] === "bomb";
 };
 
 export const placeBombs = ({
@@ -51,7 +53,7 @@ export const placeBombs = ({
 
       // Only place a bomb if the area is clear!
       if (!isBomb({ grid, x, y })) {
-        grid[x][y] = -1;
+        grid[x][y] = "bomb";
       } else {
         i--;
       }
