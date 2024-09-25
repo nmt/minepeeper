@@ -1,36 +1,36 @@
 export type CellType =
   | "empty"
-  | "one"
-  | "two"
-  | "three"
-  | "four"
-  | "five"
-  | "six"
-  | "seven"
-  | "eight"
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
   | "bomb"
   | "flag"
   | "question";
 
-export const Cell = ({ cellType }: { cellType: string }) => {
+export const Cell = ({ cellType }: { cellType: CellType }) => {
   switch (cellType) {
     case "empty":
       return <>⬜️</>;
-    case "one":
+    case 1:
       return <>1️⃣</>;
-    case "two":
+    case 2:
       return <>2️⃣ </>;
-    case "three":
+    case 3:
       return <>3️⃣</>;
-    case "four":
+    case 4:
       return <>4️⃣</>;
-    case "five":
+    case 5:
       return <>5️⃣</>;
-    case "six":
+    case 6:
       return <>6️⃣</>;
-    case "seven":
+    case 7:
       return <>7️⃣</>;
-    case "eight":
+    case 8:
       return <>8️⃣</>;
     case "bomb":
       return <>💣</>;
