@@ -1,5 +1,5 @@
 export type CellType =
-  | "empty"
+  | 0
   | 1
   | 2
   | 3
@@ -8,18 +8,18 @@ export type CellType =
   | 6
   | 7
   | 8
-  | "bomb"
-  | "flag"
-  | "question";
+  | -1 // bomb
+  | 99 // flag
+  | 999; // question
 
 export const Cell = ({ cellType }: { cellType: CellType }) => {
   switch (cellType) {
-    case "empty":
+    case 0:
       return <>⬜️</>;
     case 1:
       return <>1️⃣</>;
     case 2:
-      return <>2️⃣ </>;
+      return <>2️⃣</>;
     case 3:
       return <>3️⃣</>;
     case 4:
@@ -32,11 +32,11 @@ export const Cell = ({ cellType }: { cellType: CellType }) => {
       return <>7️⃣</>;
     case 8:
       return <>8️⃣</>;
-    case "bomb":
+    case -1:
       return <>💣</>;
-    case "flag":
+    case 99:
       return <>🚩</>;
-    case "question":
+    case 999:
       return <>❓</>;
     default:
       return <></>;

@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { Cell, CellType } from "./utils/Cell";
-import { generateGrid, placeBombs } from "./utils/generateGrid";
+import { generateGrid, placeBombs, placeHints } from "./utils/generateGrid";
 
-const width = 5;
-const height = 5;
-const bombCount = 3;
+const width = 10;
+const height = 10;
+const bombCount = 10;
 
-let grid = generateGrid({ width, height });
-let bombedGrid: CellType[][];
-let display: any = [];
-
-bombedGrid = placeBombs({
+const grid = generateGrid({ width, height });
+const bombedGrid: CellType[][] = placeBombs({
   grid,
   bombCount,
   width,
   height,
 });
+const hintedGrid = placeHints(bombedGrid);
+
+let display: any = [];
 
 export const Grid = () => {
-  const [gridState, setStateGrid] = useState(bombedGrid);
+  const [gridState, setStateGrid] = useState(hintedGrid);
 
   for (let i = 0; i < gridState.length; i++) {
     display.push(<div />);

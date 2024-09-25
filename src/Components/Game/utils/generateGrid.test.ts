@@ -1,4 +1,4 @@
-import { generateGrid, isBomb, placeBombs } from "./generateGrid";
+import { generateGrid, isBomb, placeBombs, placeHints } from "./generateGrid";
 
 describe("generateGrid", () => {
   describe("generateGrid", () => {
@@ -19,17 +19,17 @@ describe("generateGrid", () => {
 
   describe("isBomb", () => {
     it.each`
-      grid                                                                                                                   | y    | x    | expected
-      ${[["empty"]]}                                                                                                         | ${0} | ${0} | ${false}
-      ${[["bomb"]]}                                                                                                          | ${0} | ${0} | ${true}
-      ${[["empty", "empty"], ["bomb", "empty"]]}                                                                             | ${0} | ${0} | ${false}
-      ${[["empty", "empty"], ["bomb", "empty"]]}                                                                             | ${1} | ${0} | ${true}
-      ${[["bomb", "bomb"], ["bomb", "empty"]]}                                                                               | ${1} | ${1} | ${false}
-      ${[["empty", "empty", "empty"], ["empty", "empty", "empty"], ["empty", "empty", "empty"], ["empty", "empty", "bomb"]]} | ${3} | ${2} | ${true}
+      grid                                             | y    | x    | expected
+      ${[[0]]}                                         | ${0} | ${0} | ${false}
+      ${[[-1]]}                                        | ${0} | ${0} | ${true}
+      ${[[0, 0], [-1, 0]]}                             | ${0} | ${0} | ${false}
+      ${[[0, 0], [-1, 0]]}                             | ${1} | ${0} | ${true}
+      ${[[-1, -1], [-1, 0]]}                           | ${1} | ${1} | ${false}
+      ${[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, -1]]} | ${3} | ${2} | ${true}
     `(
       "should return $expected when grid[$x][$y]",
       ({ grid, x, y, expected }) => {
-        const result = isBomb({ grid, x, y });
+        const result = isBomb(grid[y][x]);
         expect(result).toStrictEqual(expected);
       }
     );
@@ -51,7 +51,7 @@ describe("generateGrid", () => {
         let count = 0;
         for (let i = 0; i < height; i++) {
           for (let j = 0; j < width; j++) {
-            if (bombedGrid[i][j] === "bomb") {
+            if (bombedGrid[i][j] === -1) {
               count++;
             }
           }
@@ -60,4 +60,19 @@ describe("generateGrid", () => {
       }
     );
   });
+
+  // describe.only("placeHints", () => {
+  //   it.each`
+  //     grid                                                 | expected
+  //     ${[[0]]}                                             | ${[[0]]}
+  //     ${[[-1]]}                                        | ${[[-1]]}
+  //     ${[[0, 0], [-1, 0]]}                             | ${[[1, 1], [-1, 1]]}
+  //     ${[[0, 0], [-1, -1]]}                        | ${[[2, 2], [-1, -1]]}
+  //     ${[[-1, -1], [-1, 0]]}                   | ${[[-1, -1], [-1, 3]]}
+  //     ${[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, -1]]} | ${[[0, 0, 0], [0, 0, 0], [0, 1, 1], [0, 1, -1]]}
+  //   `("should return $expected when grid[$x][$y]", ({ grid, expected }) => {
+  //     const result = placeHints(grid);
+  //     expect(result).toStrictEqual(expected);
+  //   });
+  // });
 });
