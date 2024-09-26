@@ -12,33 +12,43 @@ export type CellType =
   | 99 // flag
   | 999; // question
 
-export const Cell = ({ cellType }: { cellType: CellType }) => {
+const cellTypeToOutput = (cellType: CellType): string => {
   switch (cellType) {
     case 0:
-      return <>⬜️</>;
+      return "⬜️";
     case 1:
-      return <>1️⃣</>;
+      return "1️⃣";
     case 2:
-      return <>2️⃣</>;
+      return "2️⃣";
     case 3:
-      return <>3️⃣</>;
+      return "3️⃣";
     case 4:
-      return <>4️⃣</>;
+      return "4️⃣";
     case 5:
-      return <>5️⃣</>;
+      return "5️⃣";
     case 6:
-      return <>6️⃣</>;
+      return "6️⃣";
     case 7:
-      return <>7️⃣</>;
+      return "7️⃣";
     case 8:
-      return <>8️⃣</>;
+      return "8️⃣";
     case -1:
-      return <>💣</>;
+      return "💣";
     case 99:
-      return <>🚩</>;
+      return "🚩";
     case 999:
-      return <>❓</>;
+      return "❓";
     default:
-      return <></>;
+      return "";
   }
+};
+
+export const Cell = ({
+  cellType,
+  onClick,
+}: {
+  cellType: CellType;
+  onClick: () => void;
+}) => {
+  return <span onMouseDown={onClick}>{cellTypeToOutput(cellType)}</span>;
 };
