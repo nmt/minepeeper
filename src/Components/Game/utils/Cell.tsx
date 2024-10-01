@@ -46,9 +46,15 @@ const cellTypeToOutput = (cellType: CellType): string => {
 export const Cell = ({
   cellType,
   onClick,
+  onCellMouseUp,
 }: {
   cellType: CellType;
   onClick: () => void;
+  onCellMouseUp: () => void;
 }) => {
-  return <span onMouseDown={onClick}>{cellTypeToOutput(cellType)}</span>;
+  return (
+    <span onMouseDown={onClick} onMouseUp={onCellMouseUp}>
+      {cellTypeToOutput(cellType)}
+    </span>
+  );
 };

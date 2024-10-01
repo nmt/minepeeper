@@ -17,7 +17,13 @@ const hintedGrid = placeHints(bombedGrid);
 
 let display: any = [];
 
-export const Grid = ({ onCellClick }: { onCellClick: () => void }) => {
+export const Grid = ({
+  onCellClick,
+  onCellMouseUp,
+}: {
+  onCellClick: () => void;
+  onCellMouseUp: () => void;
+}) => {
   const [gridState, setStateGrid] = useState(hintedGrid);
 
   for (let i = 0; i < gridState.length; i++) {
@@ -25,7 +31,12 @@ export const Grid = ({ onCellClick }: { onCellClick: () => void }) => {
     for (let j = 0; j < gridState[i].length; j++) {
       const cellType = gridState[i][j] as CellType;
       display.push(
-        <Cell key={`${i}${j}`} cellType={cellType} onClick={onCellClick} />
+        <Cell
+          key={`${i}${j}`}
+          cellType={cellType}
+          onClick={onCellClick}
+          onCellMouseUp={onCellMouseUp}
+        />
       );
     }
   }
