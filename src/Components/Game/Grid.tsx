@@ -25,9 +25,10 @@ export const Grid = ({
   onCellMouseUp: () => void;
 }) => {
   const [gridState, setStateGrid] = useState(hintedGrid);
+  display = [];
 
   for (let i = 0; i < gridState.length; i++) {
-    display.push(<div />);
+    display.push(<div key={i} />);
     for (let j = 0; j < gridState[i].length; j++) {
       const cellType = gridState[i][j] as CellType;
       display.push(

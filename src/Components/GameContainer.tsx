@@ -8,12 +8,10 @@ export const GameContainer = () => {
   const [gameStatus, setGameStatus] = useState("alive" as GameStatus);
 
   const onMouseDown = () => {
-    console.log("hi");
     setGameStatus("clicking");
   };
 
   const onMouseUp = () => {
-    console.log("bye");
     setGameStatus("alive");
   };
 
