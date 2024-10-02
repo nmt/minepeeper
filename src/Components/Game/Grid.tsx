@@ -22,7 +22,11 @@ export const Grid = ({
   onCellMouseUp,
 }: {
   onCellClick: () => void;
-  onCellMouseUp: (clickedCell: CellType) => void;
+  onCellMouseUp: (
+    clickedCell: CellType,
+    hidden: boolean,
+    setHidden: any
+  ) => void;
 }) => {
   const [gridState, setStateGrid] = useState(hintedGrid);
   display = [];

@@ -9,13 +9,22 @@ export const GameContainer = () => {
   const [gameStatus, setGameStatus] = useState("alive" as GameStatus);
 
   const onMouseDown = () => {
+    // If not hidden
     setGameStatus("clicking");
   };
 
-  const onMouseUp = (clickedCell: CellType) => {
+  const onMouseUp = (
+    clickedCell: CellType,
+    hidden: boolean,
+    setHidden: any
+  ) => {
+    // Reveal cell/s
+    setHidden(false);
     if (clickedCell === -1) {
       setGameStatus("lose");
     } else {
+      if (hidden) {
+      }
       setGameStatus("alive");
     }
   };

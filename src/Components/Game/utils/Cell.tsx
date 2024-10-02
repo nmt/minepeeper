@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export type CellType =
   | 0
   | 1
@@ -11,6 +13,8 @@ export type CellType =
   | -1 // bomb
   | 99 // flag
   | 999; // question
+
+const hiddenCellDisplay = "🔲";
 
 const cellTypeToOutput = (cellType: CellType): string => {
   switch (cellType) {
@@ -50,11 +54,20 @@ export const Cell = ({
 }: {
   cellType: CellType;
   onClick: () => void;
-  onCellMouseUp: (clickedCell: CellType) => void;
+  onCellMouseUp: (
+    clickedCell: CellType,
+    hidden: boolean,
+    setHidden: any
+  ) => void;
 }) => {
+  const [hidden, setHidden] = useState(true);
+
   return (
-    <span onMouseDown={onClick} onMouseUp={() => onCellMouseUp(cellType)}>
-      {cellTypeToOutput(cellType)}
+    <span
+      onMouseDown={onClick}
+      onMouseUp={() => onCellMouseUp(cellType, hidden, setHidden)}
+    >
+      {hidden ? hiddenCellDisplay : cellTypeToOutput(cellType)}
     </span>
   );
 };
