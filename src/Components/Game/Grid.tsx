@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Cell, CellType } from "./utils/Cell";
+import { Cell } from "./utils/Cell";
+import { CellType } from "../types";
 
 let display: any = [];
 

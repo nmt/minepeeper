@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Grid } from "./Game/Grid";
 import { Toolbar } from "./Toolbar";
-import { CellType } from "./Game/utils/Cell";
 import {
   generateGrid,
   placeBombs,
   placeHints,
 } from "./Game/utils/generateGrid";
+import { CellType } from "./types";
 
 export type GameStatus = "alive" | "clicking" | "lose";
 

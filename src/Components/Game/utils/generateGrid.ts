@@ -1,4 +1,4 @@
-import { CellType } from "./Cell";
+import { CellType } from "../../types";
 
 export type Grid = CellType[][];
 
