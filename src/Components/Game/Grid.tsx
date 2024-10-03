@@ -1,25 +1,12 @@
 import { useState } from "react";
 import { Cell, CellType } from "./utils/Cell";
-import { generateGrid, placeBombs, placeHints } from "./utils/generateGrid";
-
-const width = 10;
-const height = 10;
-const bombCount = 10;
-
-const grid = generateGrid({ width, height });
-const bombedGrid: CellType[][] = placeBombs({
-  grid,
-  bombCount,
-  width,
-  height,
-});
-const hintedGrid = placeHints(bombedGrid);
 
 let display: any = [];
 
 export const Grid = ({
   onCellClick,
   onCellMouseUp,
+  grid,
 }: {
   onCellClick: () => void;
   onCellMouseUp: (
@@ -27,8 +14,9 @@ export const Grid = ({
     hidden: boolean,
     setHidden: any
   ) => void;
+  grid: CellType[][];
 }) => {
-  const [gridState, setStateGrid] = useState(hintedGrid);
+  const [gridState, setStateGrid] = useState(grid);
   display = [];
 
   for (let i = 0; i < gridState.length; i++) {

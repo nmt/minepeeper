@@ -2,8 +2,26 @@ import { useState } from "react";
 import { Grid } from "./Game/Grid";
 import { Toolbar } from "./Toolbar";
 import { CellType } from "./Game/utils/Cell";
+import {
+  generateGrid,
+  placeBombs,
+  placeHints,
+} from "./Game/utils/generateGrid";
 
 export type GameStatus = "alive" | "clicking" | "lose";
+
+const width = 10;
+const height = 10;
+const bombCount = 10;
+
+const grid = generateGrid({ width, height });
+const bombedGrid: CellType[][] = placeBombs({
+  grid,
+  bombCount,
+  width,
+  height,
+});
+const hintedGrid = placeHints(bombedGrid);
 
 export const GameContainer = () => {
   const [gameStatus, setGameStatus] = useState("alive" as GameStatus);
@@ -32,7 +50,11 @@ export const GameContainer = () => {
   return (
     <>
       <Toolbar gameStatus={gameStatus} />
-      <Grid onCellClick={onMouseDown} onCellMouseUp={onMouseUp} />
+      <Grid
+        onCellClick={onMouseDown}
+        onCellMouseUp={onMouseUp}
+        grid={hintedGrid}
+      />
     </>
   );
 };
