@@ -1,3 +1,3 @@
-export const BombCount = () => {
-  return <>BombCount</>;
+export const BombCount = ({ bombCount }: { bombCount: number }) => {
+  return <>{bombCount}</>;
 };

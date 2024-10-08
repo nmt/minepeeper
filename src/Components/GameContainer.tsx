@@ -49,7 +49,7 @@ export const GameContainer = () => {
 
   return (
     <>
-      <Toolbar gameStatus={gameStatus} />
+      <Toolbar bombCount={bombCount} gameStatus={gameStatus} />
       <Grid
         onCellClick={onMouseDown}
         onCellMouseUp={onMouseUp}
