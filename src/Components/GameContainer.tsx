@@ -6,7 +6,7 @@ import {
   placeBombs,
   placeHints,
 } from "./Game/utils/generateGrid";
-import { CellType } from "./types";
+import { CellType, CellWithHidden } from "./types";
 
 export type GameStatus = "alive" | "clicking" | "lose";
 
@@ -21,7 +21,7 @@ const bombedGrid: CellType[][] = placeBombs({
   width,
   height,
 });
-const hintedGrid = placeHints(bombedGrid);
+const hintedGrid: CellWithHidden[][] = placeHints(bombedGrid);
 
 export const GameContainer = () => {
   const [gameStatus, setGameStatus] = useState("alive" as GameStatus);

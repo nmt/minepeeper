@@ -1,3 +1,8 @@
+export type CellWithHidden = {
+  cellType: CellType;
+  hidden: boolean;
+};
+
 export type CellType =
   | 0
   | 1

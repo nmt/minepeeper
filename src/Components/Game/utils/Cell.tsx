@@ -36,10 +36,12 @@ const cellTypeToOutput = (cellType: CellType): string => {
 
 export const Cell = ({
   cellType,
+  hiddenFromProps,
   onClick,
   onCellMouseUp,
 }: {
   cellType: CellType;
+  hiddenFromProps: boolean;
   onClick: () => void;
   onCellMouseUp: (
     clickedCell: CellType,
@@ -47,7 +49,7 @@ export const Cell = ({
     setHidden: any
   ) => void;
 }) => {
-  const [hidden, setHidden] = useState(true);
+  const [hidden, setHidden] = useState(hiddenFromProps);
 
   return (
     <span

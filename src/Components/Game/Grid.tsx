@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Cell } from "./utils/Cell";
-import { CellType } from "../types";
+import { CellType, CellWithHidden } from "../types";
 
 let display: any = [];
 
@@ -15,7 +15,7 @@ export const Grid = ({
     hidden: boolean,
     setHidden: any
   ) => void;
-  grid: CellType[][];
+  grid: CellWithHidden[][];
 }) => {
   const [gridState, setStateGrid] = useState(grid);
   display = [];
@@ -23,10 +23,11 @@ export const Grid = ({
   for (let i = 0; i < gridState.length; i++) {
     display.push(<div key={i} />);
     for (let j = 0; j < gridState[i].length; j++) {
-      const cellType = gridState[i][j] as CellType;
+      const cellType = gridState[i][j].cellType;
       display.push(
         <Cell
           key={`${i}${j}`}
+          hiddenFromProps={gridState[i][j].hidden}
           cellType={cellType}
           onClick={onCellClick}
           onCellMouseUp={onCellMouseUp}

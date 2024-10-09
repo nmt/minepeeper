@@ -1,4 +1,4 @@
-import { CellType } from "../../types";
+import { CellWithHidden, CellType } from "../../types";
 
 export type Grid = CellType[][];
 
@@ -54,8 +54,8 @@ export const placeBombs = ({
   return grid;
 };
 
-export const placeHints = (bombedGrid: Grid): Grid => {
-  let hintedGrid = bombedGrid;
+export const placeHints = (bombedGrid: Grid): CellWithHidden[][] => {
+  let hintedGrid: Grid = bombedGrid as any;
   // Iterate through all bombs
   for (let i = 0; i < bombedGrid.length; i++) {
     for (let j = 0; j < bombedGrid[i].length; j++) {
@@ -70,7 +70,17 @@ export const placeHints = (bombedGrid: Grid): Grid => {
     }
   }
 
-  return hintedGrid;
+  let withHiddenGrid: CellWithHidden[][] = hintedGrid as any;
+  for (let i = 0; i < hintedGrid.length; i++) {
+    for (let j = 0; j < hintedGrid[i].length; j++) {
+      withHiddenGrid[j][i] = {
+        cellType: hintedGrid[j][i],
+        hidden: true,
+      };
+    }
+  }
+
+  return withHiddenGrid;
 };
 
 export const incrementSurroundingCells = ({
@@ -85,11 +95,11 @@ export const incrementSurroundingCells = ({
   let moreHintedGrid = partiallyHintedGrid;
 
   // Left to right of the bomb
-  for (var i = x - 1; i < x + 2; i++) {
+  for (let i = x - 1; i < x + 2; i++) {
     // Don't go beyond the sides of the grid!
     if (i >= 0 && i < moreHintedGrid.length) {
       // Top to bottom of bomb
-      for (var j = y - 1; j < y + 2; j++) {
+      for (let j = y - 1; j < y + 2; j++) {
         if (j >= 0 && j < moreHintedGrid[0].length) {
           // If not a bomb, increment
           if (!isBomb(moreHintedGrid[i][j])) {
