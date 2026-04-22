@@ -4,6 +4,9 @@ interface CellProps {
   isShowing: boolean;
 }
 
+// TODO: Implement onClick handler (Q: will the rerender cause FLOUT?)
+// TODO: Implement styling
+
 export default function Cell({ cellType, cellValue, isShowing }: CellProps) {
   const renderNumberCell = () => {
     if (cellValue) return <div className="cell">{cellValue}</div>;
