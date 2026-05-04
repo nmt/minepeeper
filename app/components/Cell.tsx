@@ -1,29 +1,49 @@
+"use client";
+
+import clsx from "clsx";
+import { useState } from "react";
+
 interface CellProps {
-  cellType: "bomb" | "number" | "empty" | "flag";
-  cellValue?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  cellType: "bomb" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | "empty" | "flag";
   isShowing: boolean;
 }
 
-// TODO: Implement onClick handler (Q: will the rerender cause FLOUT?)
 // TODO: Implement styling
+// TODO: Obfuscate cell value
 
-export default function Cell({ cellType, cellValue, isShowing }: CellProps) {
-  const renderNumberCell = () => {
-    if (cellValue) return <div className="cell">{cellValue}</div>;
+export default function Cell({ cellType }: CellProps) {
+  const [isShowing, setIsShowing] = useState(false);
+
+  const cellClasses = {
+    cell: true,
+    "is-showing": isShowing,
   };
 
-  if (isShowing) {
+  const renderCellValue = () => {
+    if (!isShowing) {
+      return "🔲";
+    }
     switch (cellType) {
       case "bomb":
-        return <div className="cell">💣</div>;
-      case "number":
-        return renderNumberCell();
+        return "💣";
       case "empty":
-        return <div className="cell"> </div>;
+        return " ";
       case "flag":
-        return <div className="cell">🚩</div>;
+        return "🚩";
+      default:
+        return cellType;
     }
-  } else {
-    return <div className="hidden">{cellValue}</div>;
-  }
+  };
+
+  const onClickHandler = () => {
+    if (!isShowing) {
+      setIsShowing(true);
+    }
+  };
+
+  return (
+    <div className={clsx(cellClasses)} onClick={onClickHandler}>
+      {renderCellValue()}
+    </div>
+  );
 }
