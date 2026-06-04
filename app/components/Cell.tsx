@@ -1,18 +1,18 @@
 "use client";
 
 import clsx from "clsx";
-import { useState } from "react";
 
-interface CellProps {
+export interface CellProps {
   cellType: "bomb" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | "empty" | "flag";
   isShowing: boolean;
+  onClick?: () => void;
 }
 
 // TODO: Implement styling
 // TODO: Obfuscate cell value
 
-export default function Cell({ cellType }: CellProps) {
-  const [isShowing, setIsShowing] = useState(false);
+export default function Cell({ cellType, isShowing, onClick }: CellProps) {
+  // const [isShowing, setIsShowing] = useState(false);
 
   const cellClasses = {
     cell: true,
@@ -37,7 +37,8 @@ export default function Cell({ cellType }: CellProps) {
 
   const onClickHandler = () => {
     if (!isShowing) {
-      setIsShowing(true);
+      onClick?.();
+      // setIsShowing(true);
     }
   };
 

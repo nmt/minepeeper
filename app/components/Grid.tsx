@@ -1,14 +1,26 @@
-import { ReactNode } from "react";
+"use client";
+
+import { useGameContext } from "../context/GameContext";
+import Cell from "./Cell";
 
 // TODO: CSS Grid for styling
-export const Grid = (cellsArray: ReactNode[][]) => {
+export const Grid = () => {
+  const { gridInfo, updateCell } = useGameContext();
+
+  // TODO: JS debug terminal
+  console.log({ gridInfo });
+
   return (
     <div className="grid">
-      {cellsArray.map((cellRow, rowIndex) => (
+      {gridInfo.map((cellRow, rowIndex) => (
         <div className="grid-row" key={rowIndex}>
           {cellRow.map((cellColumn, columnIndex) => (
             <div className="grid-cell" key={columnIndex}>
-              {cellColumn}
+              <Cell
+                cellType={cellColumn.cellType}
+                isShowing={cellColumn.isShowing}
+                onClick={() => updateCell(rowIndex, columnIndex)}
+              />
             </div>
           ))}
         </div>
