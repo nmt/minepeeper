@@ -3,47 +3,60 @@
 import clsx from "clsx";
 
 export interface CellProps {
-  cellType: "bomb" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | "empty" | "flag";
+  cellType: "bomb" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 0;
+  isFlagged: boolean;
   isShowing: boolean;
   onClick?: () => void;
+  onRightClick?: () => void;
 }
 
-// TODO: Implement styling
 // TODO: Obfuscate cell value
 
-export default function Cell({ cellType, isShowing, onClick }: CellProps) {
-  // const [isShowing, setIsShowing] = useState(false);
-
+export default function Cell({
+  cellType,
+  isFlagged = false,
+  isShowing = false,
+  onClick,
+  onRightClick,
+}: CellProps) {
   const cellClasses = {
     cell: true,
+    "is-flagged": isFlagged,
     "is-showing": isShowing,
   };
 
   const renderCellValue = () => {
+    if (!isShowing && isFlagged) {
+      return "🚩";
+    }
     if (!isShowing) {
       return "🔲";
     }
     switch (cellType) {
       case "bomb":
         return "💣";
-      case "empty":
+      case 0:
         return " ";
-      case "flag":
-        return "🚩";
       default:
         return cellType;
     }
   };
 
-  const onClickHandler = () => {
+  // TODO: Add tests for handling left/right click
+  const onClickHandler = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     if (!isShowing) {
       onClick?.();
-      // setIsShowing(true);
     }
   };
 
   return (
-    <div className={clsx(cellClasses)} onClick={onClickHandler}>
+    <div
+      className={clsx(cellClasses)}
+      onClick={onClickHandler}
+      onContextMenu={onRightClick}
+    >
       {renderCellValue()}
     </div>
   );
