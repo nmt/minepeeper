@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO:
 
-- Open nearest hint cells when clicking on an empty cell
+- Opening cells is weird :thinking:
 - Death status
 - New game (click on face)
 - Bomb counter

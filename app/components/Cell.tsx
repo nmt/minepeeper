@@ -10,8 +10,6 @@ export interface CellProps {
   onRightClick?: () => void;
 }
 
-// TODO: Obfuscate cell value
-
 export default function Cell({
   cellType,
   isFlagged = false,

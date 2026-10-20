@@ -3,7 +3,6 @@
 import { useGameContext } from "../context/GameContext/GameContext";
 import Cell from "./Cell";
 
-// TODO: CSS Grid for styling
 export const Grid = () => {
   const { gridInfo, showCell, flagCell } = useGameContext(); // 'subscriber'
 
