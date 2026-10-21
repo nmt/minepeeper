@@ -7,6 +7,7 @@ import {
   generateHints,
   placeBombs,
 } from "./utils/generateEmptyGrid";
+import { checkSurrounding } from "./utils/checkSurrounding";
 
 // State: Things that are reused in the context
 interface IGameContext {
@@ -40,11 +41,36 @@ export const GameContextProvider = ({
   // whats cellsArray - info about the cell, knowing what type it is, it also has the state of isShowing (open or not)
 
   const onClick = (rowIndex: number, columnIndex: number) => {
-    const newCellsArrayValue = [...cellsArray];
+    let newCellsArrayValue = [...cellsArray];
     newCellsArrayValue[rowIndex][columnIndex].isShowing = true;
 
+    // Recursively collate an array of coordinates of cells that are non-zero and not a bomb
+
+    // Once we check a cell from the array, we remove it from the array
+    const currentCell = newCellsArrayValue[rowIndex][columnIndex];
+    const listOfThingsAlreadyChecked: [number, number][] = [];
+
+    // empty - so start looking around
+    if (currentCell.cellType === 0) {
+      const tempGrid = [...cellsArray];
+      console.log({ tempGrid });
+      checkSurrounding({
+        listOfThingsAlreadyChecked,
+        grid: tempGrid,
+        currentRowIndex: rowIndex,
+        currentColIndex: columnIndex,
+      });
+      newCellsArrayValue = tempGrid;
+    }
+
+    // TODO: scenario for when click on bomb - game ends and show everything
+    if (currentCell.cellType === "bomb") {
+      // newCellsArrayValue = { ..., isShowing }
+    }
+
+    // Show them
+
     setCellsArray(newCellsArrayValue);
-    console.log({ cellsArray });
   };
 
   const onRightClick = (rowIndex: number, columnIndex: number) => {
@@ -53,7 +79,6 @@ export const GameContextProvider = ({
       !newCellsArrayValue[rowIndex][columnIndex].isFlagged;
 
     setCellsArray(newCellsArrayValue);
-    console.log({ cellsArray });
   };
 
   const generateFreshGrid = (
@@ -66,7 +91,11 @@ export const GameContextProvider = ({
     );
   };
 
-  const [cellsArray, setCellsArray] = useState(generateFreshGrid(6, 4, 10));
+  const [cellsArray, setCellsArray] = useState(generateFreshGrid(6, 4, 2));
+  // console.log(cellsArray.map((cell) => cel));
+  console.table(
+    cellsArray.map((cell) => cell.map((innerCell) => innerCell.cellType)),
+  );
 
   return (
     <GameContext.Provider
