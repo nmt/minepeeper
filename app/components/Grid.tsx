@@ -11,27 +11,21 @@ export const Grid = () => {
 
   return (
     <div
-      className={`grid grid-cols-[var(--grid-width)] grid-rows-[var(--grid-height)]`}
-      style={{
-        "--grid-width": `repeat(${width}, minmax(0, 1fr))`,
-        "--grid-height": `repeat(${height}, minmax(0, 1fr))`,
-      }}
+      class={`grid grid-rows-[repeat(var(--grid-rows,${height}),minmax(0,1fr))] grid-cols-[repeat(var(--grid-cols,${width}),minmax(0,1fr))] gap-${height}`}
+      style={{ "--grid-rows": height, "--grid-cols": width }}
     >
-      {gridInfo.map((cellRow, rowIndex) => (
-        <div className={`grid-row row-span-${width}`} key={rowIndex}>
-          {cellRow.map((cellColumn, columnIndex) => (
-            <div className={`grid-cell col`} key={columnIndex}>
-              <Cell
-                cellType={cellColumn.cellType}
-                isFlagged={cellColumn.isFlagged}
-                isShowing={cellColumn.isShowing}
-                onClick={() => showCell(rowIndex, columnIndex)}
-                onRightClick={() => flagCell(rowIndex, columnIndex)}
-              />
-            </div>
-          ))}
-        </div>
-      ))}
+      {gridInfo.map((cellRow, rowIndex) =>
+        cellRow.map((cellColumn, columnIndex) => (
+          <Cell
+            key={`${cellColumn}-${columnIndex}`}
+            cellType={cellColumn.cellType}
+            isFlagged={cellColumn.isFlagged}
+            isShowing={cellColumn.isShowing}
+            onClick={() => showCell(rowIndex, columnIndex)}
+            onRightClick={() => flagCell(rowIndex, columnIndex)}
+          />
+        )),
+      )}
     </div>
   );
 };
