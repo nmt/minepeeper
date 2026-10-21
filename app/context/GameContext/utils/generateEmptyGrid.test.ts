@@ -12,19 +12,19 @@ describe("generateEmptyGrid", () => {
     const output = generateEmptyGrid(3, 3);
     expect(output).toEqual([
       [
-        { cellType: 0, isShowing: false },
-        { cellType: 0, isShowing: false },
-        { cellType: 0, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
       ],
       [
-        { cellType: 0, isShowing: false },
-        { cellType: 0, isShowing: false },
-        { cellType: 0, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
       ],
       [
-        { cellType: 0, isShowing: false },
-        { cellType: 0, isShowing: false },
-        { cellType: 0, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
+        { cellType: 0, isFlagged: false, isShowing: false },
       ],
     ]);
   });
